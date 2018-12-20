@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, make_response, request
-from app.models import User, users
+from app.models.users import User, users
 from app.validators import  *
 from flask_jwt_extended import JWTManager
 from flask_jwt_extended import get_jwt_identity, jwt_required
@@ -81,5 +81,35 @@ def signup():
                 }), 201   
     except Exception as error:
         raise error
+
+
+@app.route('/api/v1/login', methods=['POST'])
+def login():
+    user_data = request.get_json()
+    username = user_data.get('username')
+    password = user_data.get('password')
+
+    if validate_not_keys(user_data,2):
+      return make_response(jsonify({"message": "Some fields are missing!", "user":username}),400)
+ 
+    for one_user in users:
+        if password == one_user['password'] and username == one_user["username"]:
+            access_token = create_access_token(identity={"username": username})
+            return make_response(jsonify({
+                "message": "You have successfully logged in", "access token": access_token, "users":username}), 200)
+
+    return make_response(jsonify({"message": "No such username and password"}), 200)
+   
+   
+@app.route('/api/v1/users', methods=['GET'])
+def get_users():
+    """ 
+        This method returns all users
+        of the id given to it from the list of available orders
+    """
+    if users:
+        return make_response(jsonify({"users": users}), 200)
+    return make_response(jsonify({"message": "there are currently no users registered"}),
+                        404)
 
 

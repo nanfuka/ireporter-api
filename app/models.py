@@ -2,25 +2,27 @@ import datetime
 """
     Global variable users_data  holds  user data , initially its empty
 """
-    thernames” ​:​ ​String​,  ​“email” ​:​ ​String​,  ”phoneNumber” ​:​ ​String,  ​“username” ​:​ ​String​,  ​“registered” ​:​ ​Date​,  ​“isAdmin” ​:​ ​Boolean
 users = []
 
 class User:
-    def __init__(self, user_id, firstname, lastname, othernames,, email, phoneNumber,username,  date, isAdmin):
+    def __init__(self, firstname, lastname, othernames, email, phoneNumber, password,username,  isAdmin):
         """
             This method acts as a constructor
             for our class, its used to initialise class attributes
         """
-        self.user_id = user_id
+        # date = len(users)+1
+        # isAdmin = False
+        # self.user_id = user_id
         self.firstname = firstname
         self.lastname = lastname
         self.othernames = othernames
         self.email = email
         self.phoneNumber = phoneNumber
-        self.username = user_name
-        self.date = date
+        self.username = username
+        # self.date = date
         self.isAdmin = isAdmin
-            pass
+        self.password = password
+            
 
 
     def get_dictionary(self):
@@ -31,12 +33,10 @@ class User:
             "othernames" : self.othernames,
             "email" : self.email,
             "phoneNumber" : self.phoneNumber,
-            "username" : self.user_name,
-            "date": datetime.datetime.now()
-            "isAdmin" : False
-            "user_id" :len(use)+1,
-            "user_name" : self.user_name,
-            "email" : self.email,
+            "username" : self.username,
+            "date": datetime.datetime.now(),
+            "isAdmin" : False,         
+            "user_name" : self.username,
             "password" : self.password
     }
 
@@ -47,24 +47,24 @@ class User:
         """
         oneuser = {
             
-            "user_id" : len(user)+1,
+            "user_id" : len(users)+1,
             "firstname" : self.firstname,
             "lastname" : self.lastname ,
             "othernames" : self.othernames,
             "email" : self.email,
             "phoneNumber" : self.phoneNumber,
-            "username" : self.user_name,
-            "date": datetime.datetime.now()
-            "isAdmin" : False
-            "user_id" :len(use)+1,
-            "user_name" : self.user_name,
+            "username" : self.username,
+            "date": datetime.datetime.now(),
+            "isAdmin" : False,
+      
+            "user_name" : self.username,
             "email" : self.email,
             "password" : self.password
         }
 
         users.append(oneuser)
 
-        return user
+        return oneuser
     @staticmethod
     def get_user_id(username):
         for oneuser in users:
@@ -74,6 +74,13 @@ class User:
 
     def getalluser(self):
         return {"users":users}
+
+    def check_user(self, username):
+        """Method to check if a give user already exists in the database"""
+        for one_user in users:
+            if username == one_user['username']:
+                return True
+            return False
     
 
 

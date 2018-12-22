@@ -1,12 +1,7 @@
 # from app.controllers import *
 from flask import Flask, jsonify, make_response, request
 from app.models.incident import Incident, incidents
-from app.validators import *
-
-
-
-
-
+from app.validators import Validators
 
 app = Flask(__name__)
 
@@ -21,7 +16,7 @@ def index():
 @app.route('/api/v1/redflag', methods=['POST'])
 def creates_red_flag():
     red_flag = request.get_json()
-    createdby = red_flag.get('created_by')
+    createdby = red_flag.get('createdby')
     incidenttype = red_flag.get('incidenttype')
     location = red_flag.get('location')
     status = red_flag.get('status')
@@ -29,10 +24,10 @@ def creates_red_flag():
     video = red_flag.get('video')
     comment = red_flag.get('comment')
 
-    # error = validators.validates_incident(createdby, incidenttype, location, status, image, video, comment)
+    # validation = validators.validates_incident(red_flag['createdby'], red_flag['incidenttype'], red_flag['location'])
 
-    # if error:
-    #     return jsonify({'Error': error}), 400 
+    # if validation:
+    #     return jsonify({'Error': validation}), 400 
     incident = Incident(createdby, incidenttype, location, status, video, image, comment)
     incident.create_redflags()
     # methods.create_incident(createdby, incidenttype, location, status, video, image, comment)
@@ -42,12 +37,12 @@ def creates_red_flag():
 @app.route('/api/v1/redflag', methods=['GET'])
 def get_red_flags():
 
-    return jsonify({"data":incidents})
+    return jsonify({"data":incidents}), 201
 
 @app.route('/api/v1/redflag/<int:redflag_id>', methods=['GET'])
 def get_sepecific_record(redflag_id):
     incident = Incident('createdby', 'incidenttype', 'location', 'status', 'video', 'image', 'comment')
-    return incident.get_a_redflag(redflag_id)
+    return incident.get_a_redflag(redflag_id), 200
 
 # @app.route('/api/v1/redflag/<int:redflag_id>', methods=['PATCH'])
 # def ​redflag​​(redflag_id):

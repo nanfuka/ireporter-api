@@ -6,13 +6,23 @@ import datetime
 class TestUsers(unittest.TestCase):
 
     report = { 
-    "createdby":"jkoijbbj",
-    "incidenttype" : 'fire the thief',
-    "location" : 'luweero',
-    "status" : 'draft',
-    "images" : 'thief',
-    "videos": 'theft',
-    "comment" : 'this is serious'  
+
+        "comment": "hgvvgfgghgh",
+        "createdby": "hggf",
+        "createdon": "Sat, 22 Dec 2018 14:44:05 GMT",
+        "images": "hgvhg",
+        "intervantion": "HJJH",
+        "location": "jhhjvhg",
+        "redflag_id": 2,
+        "status": "draft",
+        "videos": "hgvg"
+    # "createdby":"jkoijbbj",
+    # "incidenttype" : 'fire the thief',
+    # "location" : 'luweero',
+    # "status" : 'draft',
+    # "images" : 'thief',
+    # "videos": 'theft',
+    # "comment" : 'this is serious'  
     }
     def setUp(self):
         self.test_client = app.test_client(self)
@@ -28,37 +38,55 @@ class TestUsers(unittest.TestCase):
         response  = self.test_client.post('/api/v1/redflag', json = self.report)
         self.assertEqual(response.status_code, 201)
 
-    def test_create_redflag_without_create_user(self):
-        report = { 
-            "createdby":"jkoijbbj",
-            "incidenttype" : 'fire the thief',
-            "location" : 'luweero',
-            "status" : 'draft',
-            "images" : 'thief',
-            "videos": 'theft',
-            "comment" : 'this is serious'  
-            }
-    #     report = {
-    #         "redflag_id" : 1,
-    #         "createdon" : datetime.datetime.now(),
-    #         "createdby" : 'Deb',
-    #         "intervantion" : 'fire the thief',
+    def test_get_all_redflag(self):
+
+        reports = { 
+
+        "comment": "hgvvgfgghgh",
+        "createdby": "hggf",
+        "createdon": "Sat, 22 Dec 2018 14:44:05 GMT",
+        "images": "hgvhg",
+        "intervantion": "HJJH",
+        "location": "jhhjvhg",
+        "redflag_id": 2,
+        "status": "draft",
+        "videos": "hgvg"
+        }
+        response  = self.test_client.post('/api/v1/redflag', json = self.report)
+        
+
+        response = self.test_client.get('api/v1/redflag')
+        self.assertEqual(response.status_code, 201)
+    #     report = { 
+          
+    #         "incidenttype" : 'fire the thief',
     #         "location" : 'luweero',
     #         "status" : 'draft',
     #         "images" : 'thief',
     #         "videos": 'theft',
     #         "comment" : 'this is serious'  
-    #     }
+    #         }
+    # #     report = {
+    # #         "redflag_id" : 1,
+    # #         "createdon" : datetime.datetime.now(),
+    # #         "createdby" : 'Deb',
+    # #         "intervantion" : 'fire the thief',
+    # #         "location" : 'luweero',
+    # #         "status" : 'draft',
+    # #         "images" : 'thief',
+    # #         "videos": 'theft',
+    # #         "comment" : 'this is serious'  
+    # #     }
 
-    #     response  = self.test_client.post(
-    #         '/api/v1/redflag',
-    #         content_type='application/json',
-    #         data=json.dumps(report)
-    #     )
+    # #     response  = self.test_client.post(
+    # #         '/api/v1/redflag',
+    # #         content_type='application/json',
+    # #         data=json.dumps(report)
+    # #     )
 
-    #     message = json.loads(response.data.decode())
-    #     self.assertEqual(message['message'], 'report successfully placed')
-    #     self.assertEqual(response.status_code, 201)
+    # #     message = json.loads(response.data.decode())
+    # #     self.assertEqual(message['message'], 'report successfully placed')
+    # #     self.assertEqual(response.status_code, 201)
 
     # def test_user_signup_without_create_user(self):
     #     report = { 

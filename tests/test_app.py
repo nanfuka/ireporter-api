@@ -4,6 +4,16 @@ import json
 import datetime
 
 class TestUsers(unittest.TestCase):
+
+    report = { 
+    "createdby":"jkoijbbj",
+    "incidenttype" : 'fire the thief',
+    "location" : 'luweero',
+    "status" : 'draft',
+    "images" : 'thief',
+    "videos": 'theft',
+    "comment" : 'this is serious'  
+    }
     def setUp(self):
         self.test_client = app.test_client(self)
 
@@ -15,7 +25,10 @@ class TestUsers(unittest.TestCase):
 
 
     def test_create_redflag(self):
+        response  = self.test_client.post('/api/v1/redflag', json = self.report)
+        self.assertEqual(response.status_code, 201)
 
+    def test_create_redflag_without_create_user(self):
         report = { 
             "createdby":"jkoijbbj",
             "incidenttype" : 'fire the thief',
@@ -24,10 +37,7 @@ class TestUsers(unittest.TestCase):
             "images" : 'thief',
             "videos": 'theft',
             "comment" : 'this is serious'  
-        }
-
-        response  = self.test_client.post('/api/v1/redflag', json = report)
-        self.assertEqual(response.status_code, 201)
+            }
     #     report = {
     #         "redflag_id" : 1,
     #         "createdon" : datetime.datetime.now(),

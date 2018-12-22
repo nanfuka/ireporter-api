@@ -14,12 +14,11 @@ class TestUsers(unittest.TestCase):
         self.assertEqual(data['message'], "Welcome to I-Reporter API")
 
 
-    def test_user_signup(self):
-        report = {
-            "redflag_id" : 1,
-            "createdon" : datetime.datetime.now(),
-            "createdby" : 'Deb',
-            "intervantion" : 'fire the thief',
+    def test_create_redflag(self):
+
+        report = { 
+            "createdby":"jkoijbbj",
+            "incidenttype" : 'fire the thief',
             "location" : 'luweero',
             "status" : 'draft',
             "images" : 'thief',
@@ -27,38 +26,46 @@ class TestUsers(unittest.TestCase):
             "comment" : 'this is serious'  
         }
 
-        response  = self.test_client.post(
-            '/api/v1/redflag',
-            content_type='application/json',
-            data=json.dumps(report)
-        )
-
-        message = json.loads(response.data.decode())
-        self.assertEqual(message['message'], 'report successfully placed')
+        response  = self.test_client.post('/api/v1/redflag', json = report)
         self.assertEqual(response.status_code, 201)
+    #     report = {
+    #         "redflag_id" : 1,
+    #         "createdon" : datetime.datetime.now(),
+    #         "createdby" : 'Deb',
+    #         "intervantion" : 'fire the thief',
+    #         "location" : 'luweero',
+    #         "status" : 'draft',
+    #         "images" : 'thief',
+    #         "videos": 'theft',
+    #         "comment" : 'this is serious'  
+    #     }
 
-    def test_user_signup_without_create_user(self):
-        report = {
-            "redflag_id" : 1,
-            "createdon" : datetime.datetime.now(),
-            "createdby" : 'Deb',
-            "intervantion" : 'fire the thief',
-            "location" : 'luweero',
-            "status" : 'draft',
-            "images" : 'thief',
-            "videos": 'theft',
-            "comment" : 'this is serious'  
-        }
+    #     response  = self.test_client.post(
+    #         '/api/v1/redflag',
+    #         content_type='application/json',
+    #         data=json.dumps(report)
+    #     )
 
-        response  = self.test_client.post(
-            '/api/v1/redflag',
-            content_type='application/json',
-            data=json.dumps(report)
-        )
+    #     message = json.loads(response.data.decode())
+    #     self.assertEqual(message['message'], 'report successfully placed')
+    #     self.assertEqual(response.status_code, 201)
 
-        message = json.loads(response.data.decode())
-        self.assertEqual(message['message'], 'report successfully placed')
-        self.assertEqual(response.status_code, 201)
+    # def test_user_signup_without_create_user(self):
+    #     report = { 
+    #         "intervantion" : 'fire the thief',
+    #         "location" : 'luweero',
+    #         "status" : 'draft',
+    #         "images" : 'thief',
+    #         "videos": 'theft',
+    #         "comment" : 'this is serious'  
+    #     }
+
+    #     response  = self.test_client.post('/api/v1/redflag', json = report)
+    #     self.assertEqual(response.status_code, 201)
+
+        # message = json.loads(response.data.decode())
+        # self.assertEqual(message['message'], 'report successfully placed')
+        # self.assertEqual(response.status_code, 201)
 
 
 
@@ -79,13 +86,13 @@ class TestUsers(unittest.TestCase):
     #     token = json.loads(response1.data.decode())
     #     print(token)
 
-        response = self.test_client.get(
-            'api/v1/users',
-            headers={'Authorization': 'Bearer ' + token['token']},
-            content_type='application/json'
-        )
+        # response = self.test_client.get(
+        #     'api/v1/users',
+        #     headers={'Authorization': 'Bearer ' + token['token']},
+        #     content_type='application/json'
+        # )
 
-        message = json.loads(response.data.decode())
+        # message = json.loads(response.data.decode())
 
-        self.assertEqual(message['message'], 'welcome')
+        # self.assertEqual(message['message'], 'welcome')
 

@@ -1,26 +1,29 @@
 import datetime
 incidents = []
+
 class Incident:
-    def __init__(self, createdby, incidenttype, location, status, image, video, comment):
+    def __init__(self, createdby, location,comment, redflag, intervention, status, images, videos):
+
         self.createdby = createdby
-        self.incidenttype = incidenttype
         self.location = location
-        self.status = 'draft'
-        self.image = image
-        self.video = video
         self.comment = comment
-    
+        self.redflag = redflag
+        self.intervention = intervention
+        self.status = status
+        self.images = images
+        self.videos = videos
+
     def get_json(self):
 
         return{
             "redflag_id" :len(incidents)+1,
             "createdon" : datetime.datetime.now(),
             "createdby" : self.createdby,
-            "intervantion" :  self.incidenttype,
+            "incident_type" :  [{"redflag":self.redflag, "intervantion":self.intervention}],
             "location" : self.location,
-            "status" : self.status,
-            "images" : self.image,
-            "videos": self.video,
+            "status" : [{"status":self.status}],
+            "images" : [{"images":self.images}],
+            "videos": [{"videos":self.videos}],
             "comment" : self.comment         
 
     }

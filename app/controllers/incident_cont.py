@@ -6,13 +6,16 @@ class Redflag():
     def __init__(self):
         self.redflag_list = []
 
-    def create_redflag(self, createdby, incidenttype,location, status, image, video, comment):
+    # def create_redflag(self, createdby, incident_type,location, status, image, video, comment):
+    def create_redflag(self, createdby, location, comment,  redflag, intervention, status, images, videos):
         self.createdby = createdby
-        self.incidenttype = incidenttype
+        self.redflag = redflag
+        self.intervention = intervention
+        # self.incident_type =[self.redflag, self.intervention] 
         self.location = location
         self.status = status
-        self.image = image
-        self.video = video
+        self.images = images
+        self.videos = videos
         self.comment = comment
 
 
@@ -38,7 +41,8 @@ class Redflag():
         #     return 'status must be an String!!'
 
 
-        incident = Incident(createdby, incidenttype, location, status, image, video, comment)
+        # incident = Incident(createdby, incident_type, location, status, image, video, comment)
+        incident = Incident( createdby, location, comment, redflag, intervention, status, images, videos)
 
         newinput = incident.get_json()
         incidents.append(incident.get_json())

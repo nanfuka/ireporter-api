@@ -1,12 +1,10 @@
-# from app.controllers import *
+from app.controllers import *
 from flask import Flask, jsonify, make_response, request
-from app.models.incident import Incident, incidents
-from app.validators import Validators
-
+from app.models.incident import Incident
+from app.validators import validate_data, validate_keys
+from app.controllers import create_redflags, get_redflags
 app = Flask(__name__)
 
-
-validators = Validators()
 # methods = Methods()
 """index route"""
 @app.route('/')
@@ -16,6 +14,7 @@ def index():
 @app.route('/api/v1/redflag', methods=['POST'])
 def creates_red_flag():
     red_flag = request.get_json()
+
     createdby = red_flag.get('createdby')
     incidenttype = red_flag.get('incidenttype')
     location = red_flag.get('location')
@@ -24,25 +23,44 @@ def creates_red_flag():
     video = red_flag.get('video')
     comment = red_flag.get('comment')
 
-    # validation = validators.validates_incident(red_flag['createdby'], red_flag['incidenttype'], red_flag['location'])
+    # if 'createdby' not in red_flag.keys():
+    #     return 'field must be present'
+    valid_key = validate_keys('createdby', red_flag.keys())
+    if valid_key:
+        return valid_key
+
+    valid_data = validate_data(createdby)
+    if valid_data:
+        return valid_data
+
+    # valid_key = validate_keys('location', red_flag.keys())
+    # if valid_key:
+    #     return valid_key
+
+    # valid_data = validate_data(location)
+    # if valid_data:
+    #     return valid_data
+    incident = Incident(createdby, incidenttype, location, status, video, image, comment)
+    create_redflags(incident) 
+   
+    return jsonify({"status": 201,  "message": "report successfully placed", "data":incident.get_json()}),201
+
 
     # if validation:
     #     return jsonify({'Error': validation}), 400 
-    incident = Incident(createdby, incidenttype, location, status, video, image, comment)
-    incident.create_redflags()
+    # incident = Incident(createdby, incidenttype, location, status, video, image, comment)
+    # incident.create_redflags()
     # methods.create_incident(createdby, incidenttype, location, status, video, image, comment)
-    return jsonify({"status": 201,  "message": "report successfully placed", "data": incident.create_redflags()}),201
 
 
 @app.route('/api/v1/redflag', methods=['GET'])
 def get_red_flags():
 
-    return jsonify({"data":incidents}), 201
+    return jsonify({"data":get_redflags()}), 201
 
-@app.route('/api/v1/redflag/<int:redflag_id>', methods=['GET'])
-def get_sepecific_record(redflag_id):
-    incident = Incident('createdby', 'incidenttype', 'location', 'status', 'video', 'image', 'comment')
-    return incident.get_a_redflag(redflag_id), 200
+# @app.route('/api/v1/redflag/<int:redflag_id>', methods=['GET'])
+# def get_sepecific_record(redflag_id):
+#     return incident.get_a_redflag(redflag_id), 200
 
 # @app.route('/api/v1/redflag/<int:redflag_id>', methods=['PATCH'])
 # def ​redflag​​(redflag_id):

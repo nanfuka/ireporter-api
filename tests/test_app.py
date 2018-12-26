@@ -44,7 +44,6 @@ class TestUsers(unittest.TestCase):
 
         "comment": "hgvvgfgghgh",
         "createdby": "hggf",
-        "createdon": "Sat, 22 Dec 2018 14:44:05 GMT",
         "images": "hgvhg",
         "intervantion": "HJJH",
         "location": "jhhjvhg",
@@ -132,5 +131,4 @@ class TestUsers(unittest.TestCase):
 
         # message = json.loads(response.data.decode())
 
-        # self.assertEqual(message['message'], 'welcome')
-
+        # self.assertEqual(message['message'], 'welco

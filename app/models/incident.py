@@ -1,10 +1,7 @@
 import datetime
-from flask import Flask, jsonify, make_response, request
 incidents = []
 class Incident:
-    def __init__(self, createdby, incidenttype, location, status, video, image, comment):
-        self.redflag_id = len(incidents)+1
-        self.createdon = datetime.datetime.now()
+    def __init__(self, createdby, incidenttype, location, status, image, video, comment):
         self.createdby = createdby
         self.incidenttype = incidenttype
         self.location = location
@@ -17,7 +14,7 @@ class Incident:
 
         return{
             "redflag_id" :len(incidents)+1,
-            "createdon" : self.createdon,
+            "createdon" : datetime.datetime.now(),
             "createdby" : self.createdby,
             "intervantion" :  self.incidenttype,
             "location" : self.location,
@@ -27,29 +24,16 @@ class Incident:
             "comment" : self.comment         
 
     }
-    def create_redflags(self):
-        record = {
-            "redflag_id" :len(incidents)+1,
-            "createdon" : self.createdon,
-            "createdby" : self.createdby,
-            "intervantion" :  self.incidenttype,
-            "location" : self.location,
-            "status" : self.status,
-            "images" : self.image,
-            "videos": self.video,
-            "comment" : self.comment
-        }
-        incidents.append(record)
-        return record
 
-    def get_a_redflag(self, redflag_id):
-        record = [record for record in incidents if record['redflag_id'] == redflag_id]
 
-        if record:
+    # def get_a_redflag(self, redflag_id):
+    #     record = [record for record in incidents if record['redflag_id'] == redflag_id]
 
-            return jsonify({"status":200, "data":record[0]})
+    #     if record:
 
-        return jsonify({"message": "the record_id is not available"})
+    #         return jsonify({"status":200, "data":record[0]})
+
+    #     return jsonify({"message": "the record_id is not available"})
 
     # def get_redflag(self, ​​redflag_id):
     #     for 

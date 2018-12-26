@@ -1,41 +1,23 @@
-from app.models.incident import Incident, incidents
 from flask import Flask, jsonify, make_response, request
+def validate_data(username):
+    if not username or username.isspace() or len(username)<2 or len(username)>24:
+        return jsonify({"status":404, "message":"please enter all items"}), 404
+def validate_data_type(username):
+    if not type(username) == str:
+        return 'status must be an String!!'
 
-class Validators:
-    #     """
-    #     method that adds validation to Incident 
-    #     """
+def validate_intdata_type(numbers):
+    if not type(numbers) == int:
+        return 'status must be a number!!'
 
-    def validates_incident(self,  createdby, incidenttype, location):
-        """validate no input and spaces in the input box"""
-        if not createdby:
-            return jsonify({"status": 404, "message":"Enter the name of the creator of this incident"}) 
+def validate_keys(value, lst):
+    if value not in lst:
+        return jsonify({"status":404, "message":"field must be present"}), 404
 
-
-        # if not incidenttype:
-        #     return "Enter the incidenttype"
-
-        if not location or location.isspace():
-            return "Enter the location of the incident"
-
-        # if not comment or comment.isspace():
-        #     return "Enter the comment"
-
-        
-
-
-
-        """validate data-types"""
-        # if isinstance(createdby, int) or status == " ":
-        # #     return "created_by should be a string"
-        # if isinstance(location, int):
-        #     return "location should be a string"
-
-        # # if isinstance(status, int):
-        # #     return "status should be a string"
-
-        # # if isinstance(comment, int):
-        # #     return "video should be a string"
-
-        # if isinstance(incidenttype, int):
-        #     return "incidenttype should be a string"
+def input_jsonformat(data):
+    if not type(data) == dict:
+        return jsonify({
+            "message":'Data must be in dictionary format',
+            "required format":{"userid": "int", "weight": "float",
+                "status":"string","destination":"string","pickup":"string"}
+            }), 400

@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/nanfuka/ireporter-api.svg?branch=162823442-user-able-get-all-redflags)](https://travis-ci.org/nanfuka/ireporter-api)
+[![Coverage Status](https://coveralls.io/repos/github/nanfuka/ireporter-api/badge.svg?branch=162823442-user-able-get-all-redflags)](https://coveralls.io/github/nanfuka/ireporter-api?branch=162823442-user-able-get-all-redflags)
 
 ireporter-api
 # i-reporter

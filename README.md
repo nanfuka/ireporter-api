@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/nanfuka/ireporter-api.svg?branch=162823442-user-able-get-all-redflags)](https://travis-ci.org/nanfuka/ireporter-api)
+
 ireporter-api
 # i-reporter
 

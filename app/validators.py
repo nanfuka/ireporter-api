@@ -1,10 +1,13 @@
 from flask import Flask, jsonify, make_response, request
 def validate_data(value):
-    if not value or value.isspace() or len(value)<2 or len(value)>24 or type(value) == str:
+    if not value or value.isspace() or len(value)<2 or len(value)>24 or type(value) == int:
         return jsonify({"status":404, "message":"please enter all items in the right formart"}), 404
 # def validate_data_type(username):
 #     if not type(username) == str:
 #         return 'status must be an String!!'
+def validate_datas(value):
+    if not value or value.isspace() or len(value)<2 or len(value)>24 or type(value) == int:
+        return jsonify({"status":404, "message":"please enter all items in the right formart"}), 404
 
 def validate_intdata_type(numbers):
     if not type(numbers) == int:
@@ -20,3 +23,10 @@ def input_jsonformat(data):
             "message":'Data must be in dictionary format',
             "required format":{"createdby":2,"incidenttype":"jgjjhghhgjh","location":"hjgjhg", "status":"jhgkjh", "image":"hjgjhg", "video":"vhgfghf", "comment":"hjgjhkj"}
             }), 400
+
+# def validate_status(status):
+#     if not status=="draft" or status=="resolved":
+#         return "invalid input"
+
+
+

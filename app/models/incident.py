@@ -14,7 +14,7 @@ class Incident:
         self.videos = videos
 
     def get_json(self):
-
+        
         return{
             "redflag_id" :len(incidents)+1,
             "createdon" : datetime.datetime.now(),

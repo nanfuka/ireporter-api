@@ -33,9 +33,9 @@ def add_parcels():
     redflag = Redflag()
     error_message = redflag.validate_input(createdby, location, redflags, intervention)
     if  error_message:
-        return jsonify({"status":404, 'messaage': error_message}), 400 
-    new_parcel = redflag.create_redflag(data['createdby'], data['location'], data['comment'],data['redflags'],data['intervention'], data['status'], data['images'], data['videos'])
-    return jsonify({"status":200,"data":new_parcel})
+        return jsonify({"status":404, 'message': error_message}), 404
+    new_incident = redflag.create_redflag(data['createdby'], data['location'], data['comment'],data['redflags'],data['intervention'], data['status'], data['images'], data['videos'])
+    return jsonify({"status":201, "message":"Added a new incident","data":new_incident}),201
 
     # # return 
 

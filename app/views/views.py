@@ -20,79 +20,97 @@ def get_redflags():
 
 @app.route('/api/v1/redflag', methods=['POST'])
 def add_parcels():
+    data = request.get_json()
 
-    """ Create a parcel delivery order """
+    createdby = data.get('createdby')
+    location = data.get('location')
+    comment = data.get('comment')
+    redflags = data.get('redflags')
+    intervention = data.get('intervention')
+    status = data.get('status')
+    images = data.get('images')
+    videos = data.get('videos')
+    redflag = Redflag()
+    error_message = redflag.validate_input(createdby, location, redflags, intervention)
+    if  error_message:
+        return jsonify({"status":404, 'messaage': error_message}), 400 
+    new_parcel = redflag.create_redflag(data['createdby'], data['location'], data['comment'],data['redflags'],data['intervention'], data['status'], data['images'], data['videos'])
+    return jsonify({"status":200,"data":new_parcel})
 
-    data = request.get_json() 
+    # # return 
 
-    input_type = input_jsonformat(data)
-    if input_type:
-        return input_type  
+    # """ Create a parcel delivery order """
 
-    valid_key = validate_keys('createdby', data.keys())
-    if valid_key:
-        return valid_key
+    # data = request.get_json() 
 
-    valid_key = validate_keys('location', data.keys())
-    if valid_key:
-        return valid_key
+    # input_type = input_jsonformat(data)
+    # # if input_type:
+    #     return input_type  
 
-    valid_key = validate_keys('location', data.keys())
-    if valid_key:
-        return valid_key
-    valid_key = validate_keys('comment', data.keys())
-    if valid_key:
-        return valid_key
+    # valid_key = validate_keys('createdby', data.keys())
+    # if valid_key:
+    #     return valid_key
 
-    valid_key = validate_keys('redflag', data.keys())
-    if valid_key:
-        return valid_key
+    # valid_key = validate_keys('location', data.keys())
+    # if valid_key:
+    #     return valid_key
 
-    valid_key = validate_keys('intervention', data.keys())
-    if valid_key:
-        return valid_key
+    # valid_key = validate_keys('location', data.keys())
+    # if valid_key:
+    #     return valid_key
+    # valid_key = validate_keys('comment', data.keys())
+    # if valid_key:
+    #     return valid_key
 
-    valid_key = validate_keys('status', data.keys())
-    if valid_key:
-        return valid_key
+    # valid_key = validate_keys('redflag', data.keys())
+    # if valid_key:
+    #     return valid_key
 
-    valid_key = validate_keys('images', data.keys())
-    if valid_key:
-        return valid_key
+    # valid_key = validate_keys('intervention', data.keys())
+    # if valid_key:
+    #     return valid_key
 
-    valid_key = validate_keys('videos', data.keys())
-    if valid_key:
-        return valid_key
+    # valid_key = validate_keys('status', data.keys())
+    # if valid_key:
+    #     return valid_key
+
+    # valid_key = validate_keys('images', data.keys())
+    # if valid_key:
+    #     return valid_key
+
+    # valid_key = validate_keys('videos', data.keys())
+    # if valid_key:
+    #     return valid_key
  
-    new_parcel = redflag.create_redflag(data['createdby'], data['location'], data['comment'],data['redflag'],data['intervention'], data['status'], data['images'], data['videos'])
-    valid_value = validate_data(data['createdby'])
-    if valid_value:
-        return valid_value
+    # new_parcel = redflag.create_redflag(data['createdby'], data['location'], data['comment'],data['redflag'],data['intervention'], data['status'], data['images'], data['videos'])
+    # valid_value = validate_data(data['createdby'])
+    # if valid_value:
+    #     return valid_value
 
-    valid_value = validate_data(data['location'])
-    if valid_value:
-        return valid_value
+    # valid_value = validate_data(data['location'])
+    # if valid_value:
+    #     return valid_value
 
-    valid_value = validate_data(data['comment'])
-    if valid_value:
-        return valid_value
+    # valid_value = validate_data(data['comment'])
+    # if valid_value:
+    #     return valid_value
 
-    valid_value = validate_data(data['redflag'])
-    if valid_value:
-        return valid_value
+    # valid_value = validate_data(data['redflag'])
+    # if valid_value:
+    #     return valid_value
 
-    valid_value = validate_data(data['intervention'])
-    if valid_value:
-        return valid_value
+    # valid_value = validate_data(data['intervention'])
+    # if valid_value:
+    #     return valid_value
 
-    valid_value = validate_data(data['comment'])
-    if valid_value:
-        return valid_value
+    # valid_value = validate_data(data['comment'])
+    # if valid_value:
+    #     return valid_value
 
-    if not data['status']=="draft" and not data['status']=="resolved" and not data['status']=="rejected" and not data['status']=="under_investigation":
-        return jsonify({"status": 404, "message":"invalid status input. The status should either be draft, resolved, underinvestigation or rejected"})
+    # if not data['status']=="draft" and not data['status']=="resolved" and not data['status']=="rejected" and not data['status']=="under_investigation":
+    #     return jsonify({"status": 404, "message":"invalid status input. The status should either be draft, resolved, underinvestigation or rejected"})
 
-    return jsonify({"status": 201, "message":"Added a new incident", "Incident":new_parcel}), 201
+    # return jsonify({"status": 201, "message":"Added a new incident", "Incident":new_parcel}), 201
 
 @app.route('/api/v1/redflag/<int:redflag_id>', methods=['GET'])
 def get_sepecific_record(redflag_id):

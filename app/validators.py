@@ -1,3 +1,10 @@
+# def validate_input(createdby, location):
+
+# zif not createdby or createdby.isspace():
+#             return 'please enter the id of the creator of this redflag'
+#         elif not location or location.isspace():
+#             return 'Enter location.'
+
 from flask import Flask, jsonify, make_response, request
 def validate_data(value):
     if not value or value.isspace() or len(value)<2 or len(value)>24 or type(value) == int:
@@ -27,6 +34,3 @@ def input_jsonformat(data):
 # def validate_status(status):
 #     if not status=="draft" or status=="resolved":
 #         return "invalid input"
-
-
-

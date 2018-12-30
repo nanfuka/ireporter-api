@@ -25,6 +25,27 @@ class Redflag():
         incidents.append(incident.get_json())
         return newinput
 
+    # def validate_input(self, createdby, location,redflag, intervention):
+    def validate_input(self, createdby, location, redflag, intervention):
+
+        # if createdby not in lst:
+        #     return "Createdby field must be present", 404
+
+        if not createdby or createdby.isspace():
+            return 'please enter the id of the creator of this redflag'
+        elif not location or location.isspace():
+            return 'Enter location.'
+        elif not redflag or redflag.isspace():
+            return 'Enter a redflag.'
+        elif not intervention or intervention.isspace():
+            return 'Enter intervantion.'
+        
+    # def validate_keys(self, createdby, location, lst):
+    #     if createdby not in lst:
+    #         return "All fields must be present", 404
+    #     elif not location or location.isspace():
+    #         return 'Email field can not be left empty.'
+
     def get_allredflags(self):
         return incidents
 

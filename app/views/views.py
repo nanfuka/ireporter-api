@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request, json
 from app.controllers.incident_cont import Redflag
 from app.models.incident import Incident, incidents
-from app.validators import validate_data, validate_intdata_type, validate_keys, input_jsonformat
+# from app.validators import validate_data, validate_intdata_type, validate_keys, input_jsonformat
 
 
 app = Flask(__name__)

@@ -8,18 +8,20 @@ class Redflag():
         self.redflag_list = []
 
    
-    def create_redflag(self, createdby, location, comment,  redflag, intervention, status, images, videos):
-        self.createdby = createdby
-        self.redflag = redflag
-        self.intervention = intervention
+    # def create_redflag(self, createdby, location, comment,  redflag, intervention, status, images, videos):
+    def create_redflag(self, *args):
+    
+        self.createdby = args[0]
+        self.redflag = args[1]
+        self.intervention = args[2]
         # self.incident_type =[self.redflag, self.intervention] 
-        self.location = location
-        self.status = status
-        self.images = images
-        self.videos = videos
-        self.comment = comment
+        self.location = args[3]
+        self.status = args[4]
+        self.images = args[5]
+        self.videos = args[6]
+        self.comment = args[7]
 
-        incident = Incident( createdby, location, comment, redflag, intervention, status, images, videos)
+        incident = Incident( *args)
 
         newinput = incident.get_json()
         incidents.append(incident.get_json())

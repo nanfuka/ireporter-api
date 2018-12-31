@@ -2,16 +2,26 @@ import datetime
 incidents = []
 
 class Incident:
-    def __init__(self, createdby, location,comment, redflag, intervention, status, images, videos):
+    # def __init__(self, createdby, location,comment, redflag, intervention, status, images, videos):
+    # def __init__(self, *args):
+    #     self.createdby = createdby
+    #     self.location = location
+    #     self.comment = comment
+    #     self.redflag = redflag
+    #     self.intervention = intervention
+    #     self.status = status
+    #     self.images = images
+    #     self.videos = videos
 
-        self.createdby = createdby
-        self.location = location
-        self.comment = comment
-        self.redflag = redflag
-        self.intervention = intervention
-        self.status = status
-        self.images = images
-        self.videos = videos
+    def __init__(self, *args):
+        self.createdby = args[0]
+        self.location = args[1]
+        self.comment = args[2]
+        self.redflag = args[3]
+        self.intervention = args[4]
+        self.status = args[5]
+        self.images = args[6]
+        self.videos = args[7]
 
     def get_json(self):
         

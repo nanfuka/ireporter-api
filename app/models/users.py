@@ -5,20 +5,21 @@ import datetime
 users = []
 
 class User:
-    def __init__(self, firstname, lastname, othernames, email, phoneNumber, password,username,  isAdmin):
+    # def __init__(self, firstname, lastname, othernames, email, phoneNumber, password,username,  isAdmin):
+    def __init__(self, *args):
         """
             This method acts as a constructor
             for our class, its used to initialise class attributes
         """
 
-        self.firstname = firstname
-        self.lastname = lastname
-        self.othernames = othernames
-        self.email = email
-        self.phoneNumber = phoneNumber
-        self.username = username
-        self.isAdmin = isAdmin
-        self.password = password
+        self.firstname = args[0]
+        self.lastname = args[1]
+        self.othernames = args[2]
+        self.email = args[3]
+        self.phoneNumber = args[4]
+        self.username = args[5]
+        self.isAdmin = args[6]
+        self.password = args[7]
             
 
 

@@ -4,8 +4,8 @@ import datetime
 """
 users = []
 
+
 class User:
-    # def __init__(self, firstname, lastname, othernames, email, phoneNumber, password,username,  isAdmin):
     def __init__(self, *args):
         """
             This method acts as a constructor
@@ -20,20 +20,18 @@ class User:
         self.username = args[5]
         self.isAdmin = args[6]
         self.password = args[7]
-            
-
 
     def get_dictionary(self):
         return{
-            "user_id" : len(users)+1,
-            "firstname" : self.firstname,
-            "lastname" : self.lastname ,
-            "othernames" : self.othernames,
-            "email" : self.email,
-            "phoneNumber" : self.phoneNumber,
-            "username" : self.username,
+            "user_id": len(users) + 1,
+            "firstname": self.firstname,
+            "lastname": self.lastname,
+            "othernames": self.othernames,
+            "email": self.email,
+            "phoneNumber": self.phoneNumber,
+            "username": self.username,
             "date": datetime.datetime.now(),
-            "isAdmin" : False,         
-            "user_name" : self.username,
-            "password" : self.password
-    }
+            "isAdmin": False,
+            "user_name": self.username,
+            "password": self.password
+        }

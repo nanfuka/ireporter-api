@@ -23,7 +23,7 @@ class TestUsers(unittest.TestCase):
             }
 
     def test_index(self):
-        response = self.test_client.get('api/v1/')
+        response = self.test_client.get('/')
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(data['message'], "hi welcome to ireporter")

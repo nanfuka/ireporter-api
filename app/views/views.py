@@ -7,7 +7,7 @@ app = Flask(__name__)
 redflag = Redflag()
 
 
-@app.route('/api/v1/')
+@app.route('/')
 def index():
     return jsonify({"status": 201, "message": "hi welcome to ireporter"})
 

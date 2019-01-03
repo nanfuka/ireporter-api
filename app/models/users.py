@@ -1,6 +1,6 @@
 import datetime
 """
-    Global variable users_data  holds  user data , initially its empty
+    Global variable users  holds  user data , initially its empty
 """
 users = []
 

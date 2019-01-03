@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request, json
-from flask_swagger_ui import get_swaggerui_blueprint
+# from flasgger import Swagger, swag_from
 from app.controllers.incident_cont import Redflag
 from app.models.incident import Incident, incidents
 

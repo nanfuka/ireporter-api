@@ -26,7 +26,8 @@ class Redflag():
         return newinput
 
     # def validate_input(self, createdby, location,redflag, intervention):
-    def validate_input(self, createdby, location, redflag, intervention):
+    def validate_input(self, createdby, location, redflag, intervention,
+                       status):
 
         # if createdby not in lst:
         #     return "Createdby field must be present", 404
@@ -39,6 +40,8 @@ class Redflag():
             return 'Enter a redflag.'
         elif not intervention or intervention.isspace():
             return 'Enter intervantion.'
+        elif status != "draft":
+            return 'status should either be draft, underinvestigation, resolved or rejected'
 
     # def validate_keys(self, createdby, location, lst):
     #     if createdby not in lst:
@@ -47,7 +50,10 @@ class Redflag():
     #         return 'Email field can not be left empty.'
 
     def get_allredflags(self):
-        return incidents
+        if len(incidents) > 1:
+            return incidents
+        return {"status": 200, "message":
+                "there are no redflag records at the moment"}, 200
 
     def get_a_redflag(self, redflag_id):
         record = [
@@ -58,7 +64,8 @@ class Redflag():
 
             return jsonify({"status": 200, "data": record[0]})
 
-        return jsonify({"message": "the record_id is not available"})
+        return jsonify({"status": 404, "error":
+                        "the record_id is not available"})
 
     def edit_record(self, redflag_id):
         data = request.get_json(['location'])

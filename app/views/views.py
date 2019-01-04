@@ -18,7 +18,7 @@ def index():
 def get_redflags():
     """ A user can retrieve all redflags """
 
-    return jsonify({"status": 201, 'redflags': redflag.get_allredflags()}), 200
+    return jsonify({"status": 201, 'redflags': redflag.get_allredflags()}), 201
 
 
 @app.route('/api/v1/redflag', methods=['POST'])
@@ -35,9 +35,9 @@ def add_parcels():
     videos = data.get('videos')
     redflag = Redflag()
     error_message = redflag.validate_input(
-        createdby, location, redflags, intervention)
+        createdby, location, redflags, intervention, status)
     if error_message:
-        return jsonify({"status": 404, 'message': error_message}), 404
+        return jsonify({"status": 404, 'error': error_message}), 404
     new_incident = redflag.create_redflag(
         data['createdby'],
         data['location'],
@@ -48,7 +48,7 @@ def add_parcels():
         data['images'],
         data['videos'])
     return jsonify({
-        "status": 201,
+        "status": 201, "id": new_incident['redflag_id'],
         "message": "Added a new incident", "data": new_incident}), 201
 
 
@@ -59,7 +59,8 @@ def get_sepecific_record(redflag_id):
 
 @app.route('/api/v1/redflag/<int:redflag_id>', methods=['PUT'])
 def edit_location(redflag_id):
-    return jsonify({"status": 201, "data": redflag.edit_record(redflag_id)})
+    return jsonify({"status": 201, "data":
+                    redflag.edit_record(redflag_id)}), 201
 
 
 @app.route('/api/v1/redflag/<int:redflag_id>', methods=['DELETE'])

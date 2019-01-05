@@ -6,29 +6,43 @@ ireporter-api
 # i-reporter
 
 # description
-I-reporter is teh localised solution to the corruption problem in Africa. With this app, every citizen can  bring any form of corruption to the notice of appropriate authorities and thegeneral public. Users can also report on things that needs government intervention
+This is the API of Ireporter-app
+
+I-reporter is the localised solution to the corruption problem in Africa. With this app, every citizen can  bring any form of corruption to the notice of appropriate authorities and the general public. Users can also report on things that needs government intervention
 
 ## Project Features
-* Users can create an account and log in
-* Users can create a ​red-flag ​​record (An incident linked to corruption).
-* Users can create ​intervention​​ record​​​(a call for a government agency to intervene    e.grepair bad road sections, collapsed bridges, flooding e.t.c).4.Users can edit their ​red-flag ​​or ​intervention ​​records.
-* Users can delete their ​red-flag ​​or ​intervention ​​records.
-* Users can add geolocation (Lat Long Coordinates) to their ​red-flag ​​or ​interventionrecords​.
-* Users can change the geolocation (Lat Long Coordinates) attached to their ​red-flag ​​orintervention ​​records​.
-* Admin can change the ​status​​ of a record to either ​under investigation, rejected ​​(in theevent of a false claim)​​​or​ resolved ​​(in the event that the claim has been investigated andresolved)​.
+- Create a ​red-flag​​ record
+- Get all ​red-flag
+​- records○Get a specific ​red-flag​​ record
+- Edit a specific ​red-flag​​ record
+- Delete a ​red-flag​​ record
 
-
+##heroku
+The app is hosted om heroku at [ireporter-api](https://repoorta.herokuapp.com/)
 
 ## gh-pages 
 Go to [I-reporter](https://nanfuka.github.io/iReporter/)
 
+## API endpoints for the application
+Request|URL|Description
+---|---|---
+GET /red-flags/<red-flag-id>Fetch a specific ​red-flag​​ record
+**GET**|`api/v1/red-flags`|Fetch all ​red-flag ​​records
+**GET**|`api/v1/red-flags/<red-flag-id>`|Fetch a specific ​red-flag​​ record
+**POST**|`/red-flags`|Create a ​red-flag​​ record
+**PATCH**|`/red-flags/<red-flag-id>/location`|Edit the location of a specific red-flag record
+**PATCH**|`red-flags/<red-flag-id>/comment`|Edit the comment of a specific red-flag record
+**DELETE**|`/red-flags/<red-flag-id>`|Delete a specific red flag record
+
+
 ## Instalation
-
-Clone the GitHub repo:
- 
-` git clone https://github.com/nanfuka/iReporter/tree/gh-pages`
-
-click index.html and navigate through the other pages
+- first of all you should install python 3.7 or anyother version upwards in case you do have    it
+- Clone the GitHub repo: git clone https://github.com/nanfuka/ireporter-api.git`
+- git checkout 162823442-user-able-get-all-redflags
+- install a virtualenviroment with these commands (virtualenv venv)
+- move into the virtual enviroment.
+- install the requred packages which are in the requrements.txt file by following these        commands in your tarminal(pip install -r requirements.txt)
+- run the app (python run.py)
 
 
 ## Contributors
@@ -36,4 +50,4 @@ click index.html and navigate through the other pages
 
 ## How to Contribute
 1. Download and install Git
-2. Clone the repo `git clone https://github.com/nanfuka/iReporter/tree/gh-pages`
+2. Clone the repo `https://github.com/nanfuka/ireporter-api.git`

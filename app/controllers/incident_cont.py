@@ -25,6 +25,7 @@ class Redflag():
         incidents.append(incident.get_json())
         return newinput
 
+
     # def validate_input(self, createdby, location,redflag, intervention):
     def validate_input(self, createdby, location, redflag, intervention,
                        status):
@@ -51,7 +52,7 @@ class Redflag():
 
     def get_allredflags(self):
         if len(incidents) > 1:
-            return incidents
+            return {"status": 201, "data": incidents}, 201
         return {"status": 200, "message":
                 "there are no redflag records at the moment"}, 200
 
@@ -67,19 +68,95 @@ class Redflag():
         return jsonify({"status": 404, "error":
                         "the record_id is not available"})
 
-    def edit_record(self, redflag_id):
-        data = request.get_json(['location'])
+    def edit_record_location(self, redflag_id, data):
+        # data = request.get_json(['location'])
         for redflag in incidents:
             if redflag['redflag_id'] == redflag_id:
                 redflag['location'] = data
                 return redflag
+            # return {"status": 404, "error":
+            #         "the record_id is not available"}
+
+    def edit_record_comments(self, redflag_id, newcomment):
+
+        record = [
+            record for record in incidents if record[
+                'redflag_id'] == redflag_id]
+
+        if record:
+            record['comment'] = newcomment
+
+            return jsonify({"status": 200, "data": record})
+
+        # return jsonify({"status": 404, "error":
+        #                 "the record_id is not available"})
+
+        # for redflag in incidents:
+        #     if redflag['redflag_id'] == redflag_id:
+        #         # redflag['comment'] = data
+        #         return redflag
+        # data = request.get_json(['comment'])
+        # for redflag in incidents:
+        #     if redflag['redflag_id'] == redflag_id:
+        #         redflag['comment'] = data
+        #     return redflag
+            #     if redflag:
+            #         return jsonify({"status": 201, "data": redflag})
+            #     return jsonify({"status": 404, "error":
+            #                    "the record_id is not available"})
+            # return {"status": 404, "error":
+            #                 "the record_id is not available"}                               
 
     def delete_record(self, redflag_id):
         record = [
             redflag for redflag in incidents if redflag[
                 'redflag_id'] == redflag_id]
+        if record:
+            incidents.remove(record[0])
+            return jsonify({
+                "status":
+                200, "message": "was successfully deleted.", "data": record[0]})
+        return {"status": 404, "error":
+                "the record_id is not available"}
 
-        incidents.remove(record[0])
-        return jsonify({
-            "status":
-            200, "message": "was successfully deleted.", "data": record[0]})
+
+
+    # def update_incident(self, incident_id, request_data, keyword, username):
+
+    #     location = request_data.get("location")
+
+    #     if self.validator.check_empty_string(location):
+    #         return self.response_unaccepted("empty")
+
+    #     if self.validator.check_str_datatype(location):
+    #         return self.response_unaccepted("datatype")
+
+    #     update_incident_instance = incident_data.update_incident(
+    #         incident_id, request_data, keyword, username)
+    #     if update_incident_instance is None:
+    #         return self.response_unaccepted("none")
+    #     elif update_incident_instance == "non_author":
+    #         return Response(json.dumps({
+    #             "status":401,
+    #             "message": "You are not authorised to edit this incident."
+    #         }), content_type="application/json", status=401)
+    #     else:
+    #         return self.response_sumission_success(update_incident_instance,
+    #                                                "update")
+
+    def edit_redflag(self, redflag_id):
+        """ 
+        updates single  redflags
+        """
+        record = [record for record in incidents if record['redflag_id'] == redflag_id]
+        if record:
+            return record
+        return jsonify({"status": 404, "error": "no incident with such an id"}), 404
+
+    # def update_location(self, incident_id):
+    #     """ 
+    #     updates single  redflags
+    #     """
+    #     red_flag = [
+    #         incident for incident in incidents if incident['incident_id'] == incident_id]
+    #     return red_flag

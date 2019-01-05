@@ -77,16 +77,16 @@ class Redflag():
             # return {"status": 404, "error":
             #         "the record_id is not available"}
 
-    def edit_record_comments(self, redflag_id, newcomment):
+    # def edit_record_comments(self, redflag_id, newcomment):
 
-        record = [
-            record for record in incidents if record[
-                'redflag_id'] == redflag_id]
+    #     record = [
+    #         record for record in incidents if record[
+    #             'redflag_id'] == redflag_id]
 
-        if record:
-            record['comment'] = newcomment
+    #     if record:
+    #         record['comment'] = newcomment
 
-            return jsonify({"status": 200, "data": record})
+    #         return jsonify({"status": 200, "data": record})
 
         # return jsonify({"status": 404, "error":
         #                 "the record_id is not available"})

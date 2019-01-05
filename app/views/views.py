@@ -70,8 +70,12 @@ def edist_location(redflag_id):
         oneredflag[0]['location'] = request.json.get(
             'location', oneredflag[0]['location'])
     if oneredflag[0]['location']:
-        return jsonify({"status": 200, "data": [{"redflag_id": redflag_id, "message": "Updated redflag's location"}]}), 200
-    return jsonify({"status": 404, "error": "no incident with such an id"}), 404
+        return jsonify({"status": 200, "data": [{
+            "redflag_id": redflag_id,
+            "message": "Updated redflag's location"}]}), 200
+    return jsonify({"status": 404, "error": "no incident with such an id"}),
+    404
+
 
 @app.route("/api/v1/red-flags/<redflag_id>/comment", methods=["PATCH"])
 def edit_location(redflag_id):
@@ -83,6 +87,7 @@ def edit_location(redflag_id):
     newrecord = redflag.edit_record_comments(redflag_id, comment)
     return newrecord
 
+
 @app.route('/api/v1/red-flags/<int:redflag_id>/locations', methods=['PATCH'])
 def edit_locations(redflag_id):
     """
@@ -93,8 +98,12 @@ def edit_locations(redflag_id):
         edit_redflag[0]['location'] = request.json.get(
             'location', edit_redflag[0]['location'])
     if edit_redflag[0]['location']:
-        return jsonify({"status": 200, "data": [{"incident_id": redflag_id, "message": "Updated redflag's location"}]}), 200
-    return jsonify({"status": 404, "error": "no incident with such an id"}), 404
+        return jsonify({"status": 200, "data": [{
+            "incident_id": redflag_id,
+            "message": "Updated redflag's location"}]}), 200
+    return jsonify({
+        "status": 404, "error": "no incident with such an id"}), 404
+
 
 @app.route('/api/v1/red-flags/<int:redflag_id>/comment', methods=['PATCH'])
 def edit_comment(redflag_id):
@@ -106,17 +115,27 @@ def edit_comment(redflag_id):
         edit_redflag[0]['comment'] = request.json.get(
             'comment', edit_redflag[0]['comment'])
     if edit_redflag[0]['comment']:
-        return jsonify({"status": 200, "data": [{"redflag_id": redflag_id, "message": "Updated redflag's comment"}]}), 200
-    return jsonify({"status": 404, "error": "no redflag_id with such an id"}), 404
+        return jsonify({
+            "status": 200, "data": [{
+                "redflag_id": redflag_id,
+                "message": "Updated redflag's comment"}]}), 200
+    return jsonify(
+        {"status": 404, "error": "no redflag_id with such an id"}), 404
+
 
 @app.errorhandler(405)
 def url_not_found(error):
-    return jsonify({'message':'Requested method not allowed, try a different method'}), 405
+    return jsonify
+    ({
+        'message': 'Requested method not allowed, try a different method'
+    }), 405
+
 
 @app.errorhandler(404)
 def page_not_found(error):
-    return jsonify({'message':'page not found on server, check the url'}), 404
+    return jsonify({'message': 'page not found on server, check the url'}), 404
+
 
 @app.errorhandler(500)
 def internal_server_error(error):
-    return jsonify({'message':'internal server error, check the inputs'}), 500
+    return jsonify({'message': 'internal server error, check the inputs'}), 500

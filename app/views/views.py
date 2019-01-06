@@ -18,16 +18,20 @@ def index():
 def get_redflags():
     """ A user can retrieve all redflag records """
 
-    return jsonify({"status": 201, 'data': redflag.get_allredflags()}), 201
+    # return jsonify({"status": 201, 'data': redflag.get_allredflags()}), 201
+    return redflag.get_allredflags()
+
 
 
 @app.route('/api/v1/red-flags/<int:redflag_id>', methods=['GET'])
 def get_sepecific_record(redflag_id):
+    """route to rertieve a redflag at a specific route"""
     return redflag.get_a_redflag(redflag_id), 200
 
 
 @app.route('/api/v1/red-flags', methods=['POST'])
-def add_parcels():
+def create_redflags():
+    """A user can create a redflag by entering all the required data"""
     data = request.get_json()
 
     createdby = data.get('createdby')
@@ -57,13 +61,10 @@ def add_parcels():
         "message": "Added a new incident", "data": new_incident}), 201
 
 
-
-
-
 @app.route('/api/v1/red-flags/<int:redflag_id>/location', methods=['PATCH'])
-def edist_location(redflag_id):
+def edit_location(redflag_id):
     """
-    method for editing location of a single redflag
+    using this route a user can modify the location of a single redflag
     """
     oneredflag = redflag.edit_redflag(redflag_id)
     if oneredflag:
@@ -72,20 +73,20 @@ def edist_location(redflag_id):
     if oneredflag[0]['location']:
         return jsonify({"status": 200, "data": [{
             "redflag_id": redflag_id,
-            "message": "Updated redflag's location"}]}), 200
+            "message": "Updated redflag location"}]}), 200
     return jsonify({"status": 404, "error": "no incident with such an id"}),
     404
 
 
-@app.route("/api/v1/red-flags/<redflag_id>/comment", methods=["PATCH"])
-def edit_location(redflag_id):
-    """a user can use this route to edit the comment of a particular\
-    redflag record"""
-    data = request.get_json()
+# @app.route("/api/v1/red-flags/<redflag_id>/comment", methods=["PATCH"])
+# def edit_location(redflag_id):
+#     """a user can use this route to edit the comment of a particular\
+#     redflag record"""
+#     data = request.get_json()
 
-    comment = data.get('comment')
-    newrecord = redflag.edit_record_comments(redflag_id, comment)
-    return newrecord
+#     comment = data.get('comment')
+#     newrecord = redflag.edit_record_comments(redflag_id, comment)
+#     return newrecord
 
 
 @app.route('/api/v1/red-flags/<int:redflag_id>/locations', methods=['PATCH'])
@@ -118,7 +119,7 @@ def edit_comment(redflag_id):
         return jsonify({
             "status": 200, "data": [{
                 "redflag_id": redflag_id,
-                "message": "Updated redflag's comment"}]}), 200
+                "message": "Updated redflag comment"}]}), 200
     return jsonify(
         {"status": 404, "error": "no redflag_id with such an id"}), 404
 

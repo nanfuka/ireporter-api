@@ -109,105 +109,45 @@ class TestUsers(unittest.TestCase):
         self.assertEqual(data['status'], 404)
         self.assertEqual(data['error'], "Enter intervantion.")
 
-    # def test_get_all_redflags(self):
-    #     response = self.test_client.get('/api/v1/red-flags')
-    #     data = json.loads(response.data)
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertEqual(data['status'], 201)
+    def test_get_all_redflags(self):
+        response = self.test_client.post('/api/v1/red-flags', json=self.report)
+        response = self.test_client.get('/api/v1/red-flags')
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(data['status'], 201)
 
-    # def test_get_one_redflag(self):
-    #     response = self.test_client.get('/api/v1/redflag/1')
-    #     data = json.loads(response.data)
-    #     self.assertEqual(response.status_code, 200)
+    def test_get_one_redflag(self):
+        response = self.test_client.post('/api/v1/red-flags', json=self.report)
 
-    # # def test_get_all_redflag(self):
+        response = self.test_client.get('/api/v1/red-flags/1')
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['status'], 200)
+        self.assertEqual(data['data']['comment'], "theft of funds")
+        self.assertEqual(data['data']['incident_type'][0], {'intervantion': 'corruption should stop', 'redflag': 'kjkjhghgjh'})
 
-    # #     reports = {
+    def test_edit_location(self):
+        response = self.test_client.post('/api/v1/red-flags', json=self.report)
+        edited_location = {"location": "Mattuga"}
+        response = self.test_client.patch('/api/v1/red-flags/1/location', json=edited_location)
+        data = json.loads(response.data)
+        self.assertEqual(data['status'], 200)
+        self.assertEqual(data['data'][0], {'message':'Updated redflag location', "redflag_id": 1})
 
-    # #     "comment": "hgvvgfgghgh",
-    # #     "createdby": "hggf",
-    # #     "images": "hgvhg",
-    # #     "intervantion": "HJJH",
-    # #     "location": "jhhjvhg",
-    # #     "redflag_id": 2,
-    # #     "status": "draft",
-    # #     "videos": "hgvg"
-    # #     }
-    # #     response  = self.test_client.post('/api/v1/redflag', json = self.report)
 
-    # #     response = self.test_client.get('api/v1/redflag')
-    # #     self.assertEqual(response.status_code, 201)
-    # # #     report = {
+#    def test_edit_location_with_invalid_redflagid(self):
+#         response = self.test_client.post('/api/v1/red-flags', json=self.report)
+#         edited_location = {"location": "Mattuga"}
+#         response = self.test_client.patch('/api/v1/red-flags/6/location', json=edited_location)
+#         data = json.loads(response.data)
+#         self.assertEqual(data['status'], 200)
+#         self.assertEqual(data['data'][0], {'message':'Updated redflag location', "redflag_id": 1})
 
-    # # #         "incidenttype" : 'fire the thief',
-    # # #         "location" : 'luweero',
-    # # #         "status" : 'draft',
-    # # #         "images" : 'thief',
-    # # #         "videos": 'theft',
-    # # #         "comment" : 'this is serious'
-    # # #         }
-    # # # #     report = {
-    # # # #         "redflag_id" : 1,
-    # # # #         "createdon" : datetime.datetime.now(),
-    # # # #         "createdby" : 'Deb',
-    # # # #         "intervantion" : 'fire the thief',
-    # # # #         "location" : 'luweero',
-    # # # #         "status" : 'draft',
-    # # # #         "images" : 'thief',
-    # # # #         "videos": 'theft',
-    # # # #         "comment" : 'this is serious'
-    # # # #     }
 
-    # # # #     response  = self.test_client.post(
-    # # # #         '/api/v1/redflag',
-    # # # #         content_type='application/json',
-    # # # #         data=json.dumps(report)
-    # # # #     )
-
-    # # # #     message = json.loads(response.data.decode())
-    # # # #     self.assertEqual(message['message'], 'report successfully placed')
-    # # # #     self.assertEqual(response.status_code, 201)
-
-    # # # def test_user_signup_without_create_user(self):
-    # # #     report = {
-    # # #         "intervantion" : 'fire the thief',
-    # # #         "location" : 'luweero',
-    # # #         "status" : 'draft',
-    # # #         "images" : 'thief',
-    # # #         "videos": 'theft',
-    # # #         "comment" : 'this is serious'
-    # # #     }
-
-    # # #     response  = self.test_client.post('/api/v1/redflag', json = report)
-    # # #     self.assertEqual(response.status_code, 201)
-
-    # #     # message = json.loads(response.data.decode())
-    # #     # self.assertEqual(message['message'], 'report successfully placed')
-    # #     # self.assertEqual(response.status_code, 201)
-
-    # # # def test_report_without_createuser(self):
-
-    # # #     user1 = {
-    # # #         'username': 'deborah',
-    # # #         'email': 'deb@gmail.com',
-    # # #         'password': 'kanatanata'
-    # # #     }
-
-    # # #     response1 = self.test_client.post(
-    # # #         'api/v1/signup',
-    # # #         content_type='application/json',
-    # # #         data=json.dumps(user1)
-    # # #     )
-
-    # # #     token = json.loads(response1.data.decode())
-    # # #     print(token)
-
-    # #     # response = self.test_client.get(
-    # #     #     'api/v1/users',
-    # #     #     headers={'Authorization': 'Bearer ' + token['token']},
-    # #     #     content_type='application/json'
-    # #     # )
-
-    # #     # message = json.loads(response.data.decode())
-
-    #     # self.assertEqual(message['message'], 'welco
+    def test_edit_comment(self):
+        response = self.test_client.post('/api/v1/red-flags', json=self.report)
+        edited_comment = {"location": "treat this very seriously"}
+        response = self.test_client.patch('/api/v1/red-flags/1/comment', json=edited_comment)
+        data = json.loads(response.data)
+        self.assertEqual(data['status'], 200)
+        self.assertEqual(data['data'][0], {'message':'Updated redflag comment', "redflag_id": 1})

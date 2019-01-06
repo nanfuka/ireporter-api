@@ -52,9 +52,9 @@ class Redflag():
 
     def get_allredflags(self):
         if len(incidents) > 1:
-            return {"status": 201, "data": incidents}, 201
-        return {"status": 200, "message":
-                "there are no redflag records at the moment"}, 200
+            return jsonify({"status": 201, "data": incidents}), 201
+        return jasonify({"status": 200, "message":
+                        "there are no redflag records at the moment"}), 200
 
     def get_a_redflag(self, redflag_id):
         record = [
@@ -146,7 +146,7 @@ class Redflag():
 
     def edit_redflag(self, redflag_id):
         """ 
-        updates single  redflags
+        edit a particular redflags
         """
         record = [record for record in incidents if record['redflag_id'] == redflag_id]
         if record:

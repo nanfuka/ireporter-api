@@ -150,4 +150,4 @@ class TestUsers(unittest.TestCase):
         response = self.test_client.patch('/api/v1/red-flags/1/comment', json=edited_comment)
         data = json.loads(response.data)
         self.assertEqual(data['status'], 200)
-        self.assertEqual(data['data'][0], {'message':'Updated redflag comment', "redflag_id": 1})
+        self.assertEqual(data['data'][0], {'message': 'Updated redflag location', 'redflag_id': 1})

@@ -77,6 +77,24 @@ class Redflag():
             # return {"status": 404, "error":
             #         "the record_id is not available"}
 
+
+
+    def edits_record_location(self, redflag_id, item):
+        # data = request.get_json(['location'])
+        record = [record for record in incidents if record['redflag_id'] == redflag_id]
+        if record:
+            # return record
+#         return jsonify({"status": 404, "error": "no incident with such an id"}), 404
+# oneredflag = redflag.edit_redflag(redflag_id)
+#     if oneredflag:
+            record[0][item] = request.json.get(item, record[0][item])
+    # if oneredflag[0]['location']:
+            return jsonify({"status": 200, "data": [{"redflag_id": redflag_id, "message": "Updated redflag location"}]}), 200
+        # return jsonify({"status": 404, "error": "no incident with such an id"}), 404
+
+
+
+
     # def edit_record_comments(self, redflag_id, newcomment):
 
     #     record = [

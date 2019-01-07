@@ -76,14 +76,14 @@ def edit_comment(redflag_id):
     return redflag.edits_record_location(redflag_id, 'comment')
 
 
-@app.errorhandler(405)
-def url_not_found(error):
-    return jsonify
-    ({
-        'message': 'Requested method not allowed, try a different method'
-    }), 405
+# @app.errorhandler(405)
+# def url_not_found(error):
+#     return jsonify
+#     ({
+#         'message': 'Requested method not allowed, try a different method'
+#     }), 405
 
 
-@app.errorhandler(404)
-def page_not_found(error):
-    return jsonify({'message': 'page not found on server, check the url'}), 404
+# @app.errorhandler(404)
+# def page_not_found(error):
+#     return jsonify({'message': 'page not found on server, check the url'}), 404

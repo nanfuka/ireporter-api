@@ -17,8 +17,6 @@ def index():
 @app.route('/api/v1/red-flags')
 def get_redflags():
     """ A user can retrieve all redflag records """
-
-    # return jsonify({"status": 201, 'data': redflag.get_allredflags()}), 201
     return redflag.get_allredflags()
 
 
@@ -66,48 +64,8 @@ def edit_location(redflag_id):
     """
     using this route a user can modify the location of a single redflag
     """
-    # oneredflag = redflag.edit_redflag(redflag_id)
-    # if oneredflag:
-    #     oneredflag[0]['location'] = request.json.get(
-    #         'location', oneredflag[0]['location'])
-    # if oneredflag[0]['location']:
-    #     return jsonify({"status": 200, "data": [{
-    #         "redflag_id": redflag_id,
-    #         "message": "Updated redflag location"}]}), 200
-    # return jsonify({"status": 404, "error": "no incident with such an id"}),
-    # 404
     return redflag.edits_record_location(redflag_id, 'location')
 
-
-
-
-
-# @app.route("/api/v1/red-flags/<redflag_id>/comment", methods=["PATCH"])
-# def edit_location(redflag_id):
-#     """a user can use this route to edit the comment of a particular\
-#     redflag record"""
-#     data = request.get_json()
-
-#     comment = data.get('comment')
-#     newrecord = redflag.edit_record_comments(redflag_id, comment)
-#     return newrecord
-
-
-# @app.route('/api/v1/red-flags/<int:redflag_id>/locations', methods=['PATCH'])
-# def edit_locations(redflag_id):
-#     """
-#     route for editing location of a single redflag
-#     """
-#     edit_redflag = redflag.edit_redflag(redflag_id)
-#     if edit_redflag:
-#         edit_redflag[0]['location'] = request.json.get(
-#             'location', edit_redflag[0]['location'])
-#     if edit_redflag[0]['location']:
-#         return jsonify({"status": 200, "data": [{
-#             "incident_id": redflag_id,
-#             "message": "Updated redflag's location"}]}), 200
-#     return jsonify({
-#         "status": 404, "error": "no incident with such an id"}), 404
 
 
 @app.route('/api/v1/red-flags/<int:redflag_id>/comment', methods=['PATCH'])

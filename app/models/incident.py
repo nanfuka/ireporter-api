@@ -5,6 +5,9 @@ incidents = []
 class Incident:
 
     def __init__(self, *args):
+        """This method acts as a constructor
+            for the incident class, it initialises all class attributes
+        """
         self.createdby = args[0]
         self.location = args[1]
         self.comment = args[2]
@@ -15,7 +18,8 @@ class Incident:
         self.videos = args[7]
 
     def get_json(self):
-
+        """this method converts the class attributes into json objects
+        """
         return{
             "redflag_id": len(incidents) + 1,
             "createdon": datetime.datetime.now(),

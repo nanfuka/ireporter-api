@@ -34,6 +34,7 @@ def create_redflags():
 
     createdby = data.get('createdby')
     location = data.get('location')
+    
     comment = data.get('comment')
     redflags = data.get('redflags')
     intervention = data.get('intervention')
@@ -59,20 +60,20 @@ def create_redflags():
         "message": "Added a new incident", "data": new_incident}), 201
 
 
-# @app.route('/api/v1/red-flags/<int:redflag_id>/location', methods=['PATCH'])
-# def edit_location(redflag_id):
-#     """
-#     using this route a user can modify the location of a single redflag
-#     """
-#     return redflag.edits_record_location(redflag_id, 'location')
+@app.route('/api/v1/red-flags/<int:redflag_id>/location', methods=['PATCH'])
+def edit_location(redflag_id):
+    # """
+    # using this route a user can modify the location of a single redflag
+    # """
+    return redflag.edits_record_location(redflag_id, 'location')
 
 
 
 @app.route('/api/v1/red-flags/<int:redflag_id>/comment', methods=['PATCH'])
 def edit_comment(redflag_id):
-    """
-    Route where a user can edit the comment of a particular redfalg
-    """
+    # """
+    # Route where a user can edit the comment of a particular redfalg
+    # """
     return redflag.edits_record_location(redflag_id, 'comment')
 
 

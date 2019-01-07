@@ -11,7 +11,7 @@ class TestUsers(unittest.TestCase):
         self.app = app
 
         self.test_client = app.test_client()
-        self.report = {"createdby": "kljklj",
+        self.report = {"createdby": 2,
 
                        "location": "masaka",
                        "status": "draft",

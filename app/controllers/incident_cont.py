@@ -40,6 +40,8 @@ class Redflag():
 
         if not createdby or createdby.isspace():
             return 'please enter the id of the creator of this redflag'
+        if not isinstance(createdby, str):
+            return 'createdby should be a string'
         elif not location or location.isspace():
             return 'Enter location.'
         elif not redflag or redflag.isspace():

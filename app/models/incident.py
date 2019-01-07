@@ -26,7 +26,8 @@ class Incident:
             "createdby": self.createdby,
             "incident_type": [{
                 "redflag": self.redflag, "intervantion": self.intervention}],
-            "location": self.location,
+            # "location": self.location,
+            "location": self.location.split(","),
             "status": [{"status": self.status}],
             "images": [{"images": self.images}],
             "videos": [{"videos": self.videos}],

@@ -59,12 +59,12 @@ def create_redflags():
         "message": "Added a new incident", "data": new_incident}), 201
 
 
-@app.route('/api/v1/red-flags/<int:redflag_id>/location', methods=['PATCH'])
-def edit_location(redflag_id):
-    """
-    using this route a user can modify the location of a single redflag
-    """
-    return redflag.edits_record_location(redflag_id, 'location')
+# @app.route('/api/v1/red-flags/<int:redflag_id>/location', methods=['PATCH'])
+# def edit_location(redflag_id):
+#     """
+#     using this route a user can modify the location of a single redflag
+#     """
+#     return redflag.edits_record_location(redflag_id, 'location')
 
 
 

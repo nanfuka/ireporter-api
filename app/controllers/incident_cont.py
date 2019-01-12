@@ -29,37 +29,48 @@ class Redflag():
         newinput = incident.get_json()
         incidents.append(incident.get_json())
         return newinput
-
-    def validate_input(self, *args):
+        self.createdby = args[0]
+        self.location = args[1]
+        self.comment = args[2]
+        self.redflag = args[3]
+        self.intervention = args[4]
+        self.status = args[5]
+        self.images = args[6]
+        self.videos = args[7]
+    
+    def validate_location(self, location):
         """Method where all validations are done"""
-        createdby = args[0]
-        location = args[1]
-
-        redflag = args[2]
-        intervention = args[3]
-        status = args[4]
         geo_location = re.compile(
             "^[0-9]{2}(.)[0-9]{2}( )[0-9]{2}(.)[0-9]{2}$")
-        if not createdby:
-            return 'please enter the id of the creator of this redflag'
-        if not isinstance(createdby, int):
-            return 'createdby should be an id of the creator of the redflag'
-
+        
         if not location or location.isspace():
-            return 'please enter the location of the creator of this redflag'
+            return 'please enter the location of this redflag'
 
         elif not geo_location.match(location):
             string1 = 'invalid location, please enter the lat, long cordinates'
             string2 = 'in this formant, 25.22 56.22'
             return string1 + string2
-        elif not redflag or redflag.isspace():
-            return 'Enter a redflag.'
-        elif not intervention or intervention.isspace() or\
-                isinstance(intervention, int):
-            return 'Enter intervantion.'
-        elif status != "draft":
-            return 'status should either be draft,\
-             underinvestigation, resolved or rejected'
+
+
+    def validate_input(self, *args):
+            """Method where all validations are done"""
+            createdby = args[0]
+            redflag = args[1]
+            intervention = args[2]
+            status = args[3]
+            if not createdby:
+                return 'please enter the id of the creator of this redflag'
+            elif not isinstance(createdby, int):
+                return 'createdby should be an id of the creator of the redflag'
+            elif not redflag or redflag.isspace():
+                return 'Enter a redflag.'
+            elif not intervention or intervention.isspace() or\
+                    isinstance(intervention, int):
+                return 'Enter intervantion.'
+            elif status != "draft":
+                return 'status should either be draft,\
+                underinvestigation, resolved or rejected'
+
 
     def get_allredflags(self):
         """Method to return all redflags"""

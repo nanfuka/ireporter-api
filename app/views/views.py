@@ -31,10 +31,8 @@ def get_sepecific_record(redflag_id):
 def create_redflags():
     """A user can create a redflag by entering all the required data"""
     data = request.get_json()
-
     createdby = data.get('createdby')
-    location = data.get('location')
-    
+    location = data.get('location')    
     comment = data.get('comment')
     redflags = data.get('redflags')
     intervention = data.get('intervention')
@@ -43,8 +41,11 @@ def create_redflags():
     videos = data.get('videos')
     redflag = Redflag()
     error_message = redflag.validate_input(
-        createdby, location, redflags, intervention, status)
-    if error_message:
+        createdby, redflags, intervention, status)
+    wrong_location = redflag.validate_location(location)
+    if wrong_location:
+        return jsonify({"status": 404, 'error': wrong_location}), 404
+    elif error_message:
         return jsonify({"status": 404, 'error': error_message}), 404
     new_incident = redflag.create_redflag(
         data['createdby'],

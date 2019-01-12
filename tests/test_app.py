@@ -13,7 +13,7 @@ class TestUsers(unittest.TestCase):
         self.test_client = app.test_client()
         self.report = {"createdby": 2,
 
-                       "location": "masaka",
+                       "location": "25.22 56.22",
                        "status": "draft",
                        "images": "hjhj",
                        "videos": "jjh",
@@ -39,14 +39,34 @@ class TestUsers(unittest.TestCase):
         self.assertEqual(data['status'], 201)
         self.assertEqual(data['message'], "Added a new incident")
         self.assertEqual(data['data']['comment'], "theft of funds")
-        self.assertEqual(data['data']['location'], "masaka")
+        self.assertEqual(data['data']['location'], '25.22 56.22')
 
-    def test_create_red_flag_with_wrong_createdby_field(self):
+    # def test_create_red_flag_with_wrong_createdby_field(self):
+    #     """This method tests whether a redflag can return an error message if
+    #      all the created by key and/ or value is invalid are provided"""
+    #     report = {"createdb": "nkjnk",
+
+    #               "location": "25.22 56.22",
+    #               "status": "draft",
+    #               "images": "hjhj",
+    #               "videos": "jjh",
+    #               "comment": "hjgjhkj",
+    #               "redflags": "kjkjhghgjh",
+    #               "intervention": "jhkjhk"
+    #               }
+    #     response = self.test_client.post('/api/v1/red-flags', json=report)
+    #     data = json.loads(response.data)
+    #     self.assertEqual(response.status_code, 404)
+    #     self.assertEqual(data['status'], 404)
+    #     self.assertEqual(data['error'],
+    #                      "please enter the id of the creator of this redflag")
+
+    def test_create_red_flag_with_invalid_createdby_value(self):
         """This method tests whether a redflag can return an error message if
          all the created by key and/ or value is invalid are provided"""
-        report = {"createdb": "kljklj",
+        report = {"createdby": "debs",
 
-                  "location": "fghfjhg",
+                  "location": "25.22 56.22",
                   "status": "draft",
                   "images": "hjhj",
                   "videos": "jjh",
@@ -58,15 +78,16 @@ class TestUsers(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 404)
         self.assertEqual(data['status'], 404)
-        self.assertEqual(data['error'],
-                         "please enter the id of the creator of this redflag")
+        self.assertEqual(
+            data['error'],
+            "createdby should be an id of the creator of the redflag")
 
     def test_create_red_flag_with_wrong_locationfield(self):
         """This method tests whether a redflag can return an error message if
          all the location key and/ or value is invalid are provided"""
-        report = {"createdby": "kljklj",
+        report = {"createdby": 2,
 
-                  "locatin": "fghfjhg",
+                  "locatin": "25.22 56.22",
                   "status": "draft",
                   "images": "hjhj",
                   "videos": "jjh",
@@ -78,14 +99,17 @@ class TestUsers(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 404)
         self.assertEqual(data['status'], 404)
-        self.assertEqual(data['error'], "Enter location.")
+        self.assertEqual(
+            data
+            ['error'],
+            'please enter the location of the creator of this redflag')
 
     def test_create_red_flag_with_wrong_redflagfield(self):
         """This method tests whether a redflag can return an error message if
          all the redflad key and/ or value is invalid are provided"""
-        report = {"createdby": "kljklj",
+        report = {"createdby": 2,
 
-                  "location": "fghfjhg",
+                  "location": "25.22 56.22",
                   "status": "draft",
                   "images": "hjhj",
                   "videos": "jjh",
@@ -102,9 +126,9 @@ class TestUsers(unittest.TestCase):
     def test_create_red_flag_with_wrong_interventionfield(self):
         """This method tests whether a redflag can return an error message if
          all the intervention key and/ or value is invalid are provided"""
-        report = {"createdby": "kljklj",
+        report = {"createdby": 2,
 
-                  "location": "fghfjhg",
+                  "location": "25.22 56.22",
                   "status": "draft",
                   "images": "hjhj",
                   "videos": "jjh",
@@ -126,6 +150,9 @@ class TestUsers(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 201)
         self.assertEqual(data['status'], 201)
+
+        # self.assertEqual(data['data'], [{'comment': 'theft of funds'}])
+        # self.assertEqual(data['data']['location'], ['masaka'])
 
     def test_get_one_redflag(self):
         """This method tests whether after posting valid

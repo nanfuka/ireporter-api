@@ -1,5 +1,6 @@
 from app.models.incident import Incident, incidents
 from flask import Flask, jsonify, request, json
+import re
 
 
 class Redflag():
@@ -37,16 +38,24 @@ class Redflag():
         redflag = args[2]
         intervention = args[3]
         status = args[4]
-
-        if not createdby or createdby.isspace():
+        geo_location = re.compile(
+            "^[0-9]{2}(.)[0-9]{2}( )[0-9]{2}(.)[0-9]{2}$")
+        if not createdby:
             return 'please enter the id of the creator of this redflag'
-        if not isinstance(createdby, str):
-            return 'createdby should be a string'
-        elif not location or location.isspace():
-            return 'Enter location.'
+        if not isinstance(createdby, int):
+            return 'createdby should be an id of the creator of the redflag'
+
+        if not location or location.isspace():
+            return 'please enter the location of the creator of this redflag'
+
+        elif not geo_location.match(location):
+            string1 = 'invalid location, please enter the lat, long cordinates'
+            string2 = 'in this formant, 25.22 56.22'
+            return string1 + string2
         elif not redflag or redflag.isspace():
             return 'Enter a redflag.'
-        elif not intervention or intervention.isspace():
+        elif not intervention or intervention.isspace() or\
+                isinstance(intervention, int):
             return 'Enter intervantion.'
         elif status != "draft":
             return 'status should either be draft,\
@@ -92,7 +101,7 @@ class Redflag():
             incidents.remove(record[0])
             return jsonify({
                 "status":
-                200, "message": "was successfully deleted.", "data": record[0]})
+                200, "message": "was successfully deleted.",
+                "data": record[0]})
         return {"status": 404, "error":
                 "the record_id is not available"}
-

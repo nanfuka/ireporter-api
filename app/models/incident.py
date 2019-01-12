@@ -8,6 +8,8 @@ class Incident:
         """This method acts as a constructor
             for the incident class, it initialises all class attributes
         """
+        # self.lat = args[0],
+
         self.createdby = args[0]
         self.location = args[1]
         self.comment = args[2]
@@ -27,7 +29,7 @@ class Incident:
             "incident_type": [{
                 "redflag": self.redflag, "intervantion": self.intervention}],
             # "location": self.location,
-            "location": self.location.split(","),
+            "location": self.location,
             "status": [{"status": self.status}],
             "images": [{"images": self.images}],
             "videos": [{"videos": self.videos}],

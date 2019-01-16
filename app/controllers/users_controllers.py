@@ -35,8 +35,7 @@ class User():
             if user['username'] == username and user['password'] == password:
                 return {"status": 201,
                         "message": "you have logged in successfully"}
-            else:
-                return {"status": 404, "error": "The username and password are incorrect"}
+
 
     def check_repitition(self, username, email, password):
         for user in users:

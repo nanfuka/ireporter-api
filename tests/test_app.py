@@ -33,7 +33,7 @@ class TestUsers(unittest.TestCase):
                      }
         self.login = {"username": "nanfuka",
                       "password": "secrets"}
-   
+
     def test_index(self):
         """Method for testing the index route"""
         response = self.test_client.get('/')
@@ -46,7 +46,8 @@ class TestUsers(unittest.TestCase):
         response = self.test_client.post('/api/v1/signup', json=self.user)
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 201)
-        self.assertEqual(data['message'], "Successfully signedup with ireporter")
+        self.assertEqual(
+            data['message'], "Successfully signedup with ireporter")
         self.assertEqual(data['data']['firstname'], "debrah")
         self.assertEqual(data['data']['othernames'], "Nsubuga")
         self.assertEqual(data['data']['username'], "nanfuka")
@@ -68,15 +69,16 @@ class TestUsers(unittest.TestCase):
         response = self.test_client.post('/api/v1/login', json=login)
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(data[0], {'message': 'you have logged in successfully', 'status': 201})
-        
+        self.assertEqual(
+            data[0], {'message': 'you have logged in successfully', 'status': 201})
+
         logins = {"username": "nanfuks",
                   "password": "secres"}
         response = self.test_client.post('/api/v1/login', json=logins)
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 404)
-        self.assertEqual(data, {"error": "user with such credentials does not exist", 'status': 404})
-
+        self.assertEqual(
+            data, {"error": "user with such credentials does not exist", 'status': 404})
 
     def test_create_redflag(self):
         """This method tests whether a redflag can be created if all the
@@ -94,13 +96,13 @@ class TestUsers(unittest.TestCase):
          all the created by key and/ or value is invalid are provided"""
         report = {"createdby": "dfeefet",
 
-                       "location": "22.98 33.25",
-                       "status": "draft",
-                       "images": "imagelocation",
-                       "videos": "videolocation",
-                       "comment": "this is over recurring",
-                       "incident_type": "redflag"
-                       }
+                  "location": "22.98 33.25",
+                  "status": "draft",
+                  "images": "imagelocation",
+                  "videos": "videolocation",
+                  "comment": "this is over recurring",
+                  "incident_type": "redflag"
+                  }
         response = self.test_client.post('/api/v1/red-flags', json=report)
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 404)
@@ -114,22 +116,21 @@ class TestUsers(unittest.TestCase):
          all the location key and/ or value is invalid are provided"""
         report = {"createdby": 2,
 
-                       "location": "22.98 33.25",
-                       "status": "draft",
-                       "images": "imagelocation",
-                       "videos": "videolocation",
-                       "comment": "this is over recurring",
-                       "incident_type": "theft"
-                       }
+                  "location": "22.98 33.25",
+                  "status": "draft",
+                  "images": "imagelocation",
+                  "videos": "videolocation",
+                  "comment": "this is over recurring",
+                  "incident_type": "theft"
+                  }
         response = self.test_client.post('/api/v1/red-flags', json=report)
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 404)
         self.assertEqual(data['status'], 404)
-        self.assertEqual(data, {"error": "Incident type should either be a redflag or intervention.", "status": 404})
-
+        self.assertEqual(data, {
+                         "error": "Incident type should either be a redflag or intervention.", "status": 404})
 
     def test_get_all_redflags(self):
-
 
         user = {"firstname": "debrah",
                 "lastname": "kalungi",
@@ -153,10 +154,9 @@ class TestUsers(unittest.TestCase):
         # token = json.loads(response.data.decode())
 
         response2 = self.test_client.get('/api/v1/red-flags')
-        headers={'Authorisation':'Bearer'+ token['access_token']},
+        headers = {'Authorisation': 'Bearer' + token['access_token']},
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 201)
-
 
         # response = self.test_client.post('/api/v1/red-flags', json=self.report)
         # response = self.test_client.get('/api/v1/red-flags', json=self.report)
@@ -165,8 +165,6 @@ class TestUsers(unittest.TestCase):
         # self.assertEqual(response.status_code, 201)
         # self.assertEqual(data["status"], 201)
         # self.assertEqual(data['user']['email'], "kassd@yahoo.com")
-
-
 
         # response2 = self.test_client.get('/api/v1/oneuser/1')
         # headers={'Authorisation':'Bearer'+ token['access_token']},

@@ -101,8 +101,8 @@ class Redflag():
         """Method to return all redflags"""
         if len(incidents) > 1:
             return jsonify({"status": 201, "data": incidents}), 201
-        return jsonify({"status": 200, "message":
-                        "there are no redflag records at the moment"}), 200
+        return jsonify({"status": 404, "message":
+                        "there are no redflag records at the moment"}), 404
 
     def get_a_redflag(self, redflag_id):
         """Method that returns a particular \

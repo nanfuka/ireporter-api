@@ -82,7 +82,7 @@ def get_redflags():
 
 
 @app.route('/api/v1/red-flags/<int:redflag_id>', methods=['GET'])
-@jwt_required
+# @jwt_required
 def get_sepecific_record(redflag_id):
     """route to rertieve a redflag at a specific route"""
     return redflag.get_a_redflag(redflag_id), 200
@@ -124,7 +124,7 @@ def create_redflags():
 
 
 @app.route('/api/v1/red-flags/<int:redflag_id>/location', methods=['PATCH'])
-@jwt_required
+# @jwt_required
 def edit_location(redflag_id):
     """
     using this route a user can modify the location of a single redflag
@@ -140,7 +140,7 @@ def edit_location(redflag_id):
 
 
 @app.route('/api/v1/red-flags/<int:redflag_id>/comment', methods=['PATCH'])
-@jwt_required
+# @jwt_required
 def edit_comment(redflag_id):
 
     # """

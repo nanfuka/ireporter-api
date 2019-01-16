@@ -16,7 +16,7 @@ redflag = Redflag()
 @app.route('/')
 def index():
     """index url"""
-    return jsonify({"status": 201, "message": "hi welcome to ireporter"})
+    return jsonify({"status": 200, "message": "hi welcome to ireporter"}), 200
 
 
 @app.route('/api/v1/signup', methods=['POST'])
@@ -69,7 +69,7 @@ def login():
         token = create_access_token(username)
         return jsonify(loggedin_user, {"access_token": token})
     else:
-        return jsonify({"status": 404, "error": "user with such credentials does not exist"}), 404
+        return jsonify({"status": 204, "message": "user with such credentials does not exist"}), 204
 
 
 @app.route('/api/v1/red-flags')
@@ -85,7 +85,7 @@ def get_redflags():
 # @jwt_required
 def get_sepecific_record(redflag_id):
     """route to rertieve a redflag at a specific route"""
-    return redflag.get_a_redflag(redflag_id), 200
+    return redflag.get_a_redflag(redflag_id)
 
 
 @app.route('/api/v1/red-flags', methods=['POST'])
@@ -105,9 +105,9 @@ def create_redflags():
         createdby, incident_type, status)
     wrong_location = redflag.validate_location(location)
     if wrong_location:
-        return jsonify({"status": 404, 'error': wrong_location}), 404
+        return jsonify({"status": 406, 'error': wrong_location}), 406
     elif error_message:
-        return jsonify({"status": 404, 'error': error_message}), 404
+        return jsonify({"status": 406, 'error': error_message}), 406
     new_incident = redflag.create_redflag(
         data['createdby'],
         data['incident_type'],
@@ -133,7 +133,7 @@ def edit_location(redflag_id):
     location = data.get('location')
     wrong_location = redflag.validate_location(location)
     if wrong_location:
-        return jsonify({"status": 404, 'error': wrong_location}), 404
+        return jsonify({"status": 406, 'error': wrong_location}), 406
     # return redflag.edits_record_location(redflag_id, 'location', location), 200
 
     return redflag.edits_record_location(redflag_id, 'location', location)
@@ -152,11 +152,10 @@ def edit_comment(redflag_id):
     error_message = redflag.validate_coment(comment)
 
     if error_message:
-        return jsonify({"status": 404, 'error': error_message}), 404
-
-    # incidents["comment"] =request.json.get(item, comment)
-    # return redflag.edits_record_location(redflag_id, 'comment', comment)
+        return jsonify({"status": 406, 'error': error_message}), 406
     return redflag.edits_record_location(redflag_id, 'comment', comment)
+
+
 
 # @app.errorhandler(405)
 # def url_not_found(error):

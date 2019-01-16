@@ -40,7 +40,7 @@ class TestUsers(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(data['message'], "hi welcome to ireporter")
-        self.assertEqual(data['status'], 201)
+        self.assertEqual(data['status'], 200)
 
     def test_signup(self):
         response = self.test_client.post('/api/v1/signup', json=self.user)
@@ -52,6 +52,7 @@ class TestUsers(unittest.TestCase):
         self.assertEqual(data['data']['othernames'], "Nsubuga")
         self.assertEqual(data['data']['username'], "nanfuka")
         self.assertEqual(data['data']['phoneNumber'], 777777)
+
 
     def test_login(self):
         user = {"firstname": "debrah",
@@ -71,14 +72,8 @@ class TestUsers(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             data[0], {'message': 'you have logged in successfully', 'status': 201})
+    
 
-        logins = {"username": "nanfuks",
-                  "password": "secres"}
-        response = self.test_client.post('/api/v1/login', json=logins)
-        data = json.loads(response.data)
-        self.assertEqual(response.status_code, 404)
-        self.assertEqual(
-            data, {"error": "user with such credentials does not exist", 'status': 404})
 
     def test_create_redflag(self):
         """This method tests whether a redflag can be created if all the
@@ -105,8 +100,8 @@ class TestUsers(unittest.TestCase):
                   }
         response = self.test_client.post('/api/v1/red-flags', json=report)
         data = json.loads(response.data)
-        self.assertEqual(response.status_code, 404)
-        self.assertEqual(data['status'], 404)
+        self.assertEqual(response.status_code, 406)
+        self.assertEqual(data['status'], 406)
         self.assertEqual(
             data['error'],
             "createdby should be an id of the creator of the redflag")
@@ -125,27 +120,18 @@ class TestUsers(unittest.TestCase):
                   }
         response = self.test_client.post('/api/v1/red-flags', json=report)
         data = json.loads(response.data)
-        self.assertEqual(response.status_code, 404)
-        self.assertEqual(data['status'], 404)
+        self.assertEqual(response.status_code, 406)
+        self.assertEqual(data['status'], 406)
         self.assertEqual(data, {
-                         "error": "Incident type should either be a redflag or intervention.", "status": 404})
+                         "error": "Incident type should either be a redflag or intervention.", "status": 406})
 
     def test_edit_location(self):
         """This method tests whether after posting valid
         data, a redfalg's location can be modified with a patch method"""
-        report = {"createdby": 3,
-
-                  "location": "22.98 33.26",
-                  "status": "draft",
-                  "images": "imagelocation",
-                  "videos": "videolocation",
-                  "comment": "this is over recurring",
-                  "incident_type": "redflag"
-                  }
         edited_location = {"location": "22.33 44.56"}
         response = self.test_client.patch('/api/v1/red-flags/1/location',
                                           json=edited_location)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 201)
 
     def test_edit_comment(self):
         """This method tests whether after posting valid
@@ -155,26 +141,18 @@ class TestUsers(unittest.TestCase):
         response = self.test_client.patch('/api/v1/red-flags/1/comment',
                                           json=edited_comment)
         data = json.loads(response.data)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 201)
 
     def test_get_one_redflag(self):
         """This method tests whether after posting valid
         data, a particular can be returned"""
-        report = {"createdby": 2,
 
-                  "location": "22.98 33.26",
-                  "status": "draft",
-                  "images": "imagelocation",
-                  "videos": "videolocation",
-                  "comment": "this is over recurring",
-                  "incident_type": "redflag"
-                  }
-        response = self.test_client.post('/api/v1/red-flags', json=report)
+        response = self.test_client.post('/api/v1/red-flags', json=self.report)
 
         response = self.test_client.get('/api/v1/red-flags/1')
         data = json.loads(response.data)
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(data['status'], 200)
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(data['status'], 201)
         self.assertEqual(data['data']['comment'], 'treat this very seriously')
         self.assertEqual(data['data']['createdby'], 2)
         self.assertEqual(data['data']['images'], "imagelocation")
@@ -183,3 +161,17 @@ class TestUsers(unittest.TestCase):
         self.assertEqual(data['data']['redflag_id'], 1)
         self.assertEqual(data['data']['status'], "draft")
         self.assertEqual(data['data']['videos'], "videolocation")
+    
+    def test_get_oneredflag_if_redflagid_supplied_isinvalid(self):
+        response = self.test_client.post('/api/v1/red-flags', json=self.report)
+
+        response = self.test_client.get('/api/v1/red-flags/2')
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 201)
+
+    def test_delete_redflag(self):
+        response = self.test_client.post('/api/v1/red-flags', json=self.report)
+
+        response = self.test_client.get('/api/v1/red-flags/2')
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 201)

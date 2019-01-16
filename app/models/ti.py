@@ -27,7 +27,7 @@ class Ti:
             "phoneNumber": self.phoneNumber,
             "username": self.username,
             "date": datetime.datetime.now(),
-            "isAdmin": False,
+            "isAdmin": self.isAdmin,
             "user_name": self.username,
             "password": self.password
         }

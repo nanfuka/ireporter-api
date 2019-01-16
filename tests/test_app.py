@@ -22,6 +22,18 @@ class TestUsers(unittest.TestCase):
                        "incident_type": "redflag"
                        }
 
+        self.user = {"firstname": "debrah",
+                     "lastname": "kalungi",
+                     "othernames": "Nsubuga",
+                     "email": "kalungi2k6@yahoo.com",
+                     "PhoneNumber": 777777,
+                     "username": "nanfuka",
+                     "isAdmin": "true",
+                     "password": "secrets"
+                     }
+        self.login = {"username": "nanfuka",
+                      "password": "secrets"}
+   
     def test_index(self):
         """Method for testing the index route"""
         response = self.test_client.get('/')
@@ -30,16 +42,44 @@ class TestUsers(unittest.TestCase):
         self.assertEqual(data['message'], "hi welcome to ireporter")
         self.assertEqual(data['status'], 201)
 
-    def test_create_redflag(self):
-        """This method tests whether a redflag can be created if all the
-         attributes are provided"""
-        response = self.test_client.post('/api/v1/red-flags', json=self.report)
+    def test_signup(self):
+        response = self.test_client.post('/api/v1/signup', json=self.user)
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 201)
-        self.assertEqual(data['status'], 201)
-        self.assertEqual(data['message'], "Added a new incident")
-        # self.assertEqual(data['data']['comment'], "this is over recurring")
-        self.assertEqual(data['data']['location'], '25.22 56.22')
+        self.assertEqual(data['message'], "Successfully signedup with ireporter")
+        self.assertEqual(data['data']['firstname'], "debrah")
+        self.assertEqual(data['data']['othernames'], "Nsubuga")
+        self.assertEqual(data['data']['username'], "nanfuka")
+        self.assertEqual(data['data']['phoneNumber'], 777777)
+
+    def test_login(self):
+        # response = self.test_client.post('/api/v1/signup', json=self.user)
+        # data = json.loads(response.data)
+        login = {"username": "nanfuka",
+                 "password": "secrets"}
+        response = self.test_client.post('/api/v1/login', json=login)
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        # self.assertEqual(data['message'], "Successfully signedup with ireporter")
+
+    # def test_login_with_wrong_credentials(self):
+    #     login = ({"username":"mubarak", "password": "musilamu"})
+    #     response = self.test_client.post('/api/v1/login', json=login)
+    #     data = json.loads(response.data)
+    #     self.assertEqual(response.status_code, 404 )
+    #     self.assertEqual(data['error'], "user with such credentials does not exist")
+
+
+    # def test_create_redflag(self):
+    #     """This method tests whether a redflag can be created if all the
+    #      attributes are provided"""
+    #     response = self.test_client.post('/api/v1/red-flags', json=self.report)
+    #     data = json.loads(response.data)
+    #     self.assertEqual(response.status_code, 201)
+    #     self.assertEqual(data['status'], 201)
+    #     self.assertEqual(data['message'], "Added a new incident")
+    #     # self.assertEqual(data['data']['comment'], "this is over recurring")
+    #     self.assertEqual(data['data']['location'], '25.22 56.22')
 
     # def test_create_red_flag_with_invalid_createdby_value(self):
     #     """This method tests whether a redflag can return an error message if

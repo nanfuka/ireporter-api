@@ -68,20 +68,29 @@ class Redflag():
     def validate_user_details(self, *args):
         firstname = args[0]
         lastname = args[1]
-        # othernames = args[2]
         email = args[2]
-        # phoneNumber = args[4]
         username = args[3]
-        # isAdmin = args[6]
         password = args[4]
+        phoneNumber = args[5]
+        isAdmin = args[6]
+        othernames = args[7]
 
 
-        if not firstname or not lastname or not email or not username or not password:
 
-        # if not firstname or not lastname or not othernames or not email or not phoneNumber or not username or not password:
+        # if type(phoneNumber) != int:
+        #     return "The phone number should be an integer"
+        if not isinstance(firstname, str) or not isinstance(lastname, str) or not isinstance(username, str) or not isinstance(othernames, str):
+            return "invalid input on one of the items. Only phone number should be an integer"
+        elif not firstname or firstname.isspace() or not lastname or lastname.isspace() or not email or email.isspace() or not username or username.isspace() or not password or password.isspace()or not isAdmin or isAdmin.isspace():
             return "Enter all items"
-        elif isinstance(firstname, int) or isinstance(lastname, int) or isinstance(username, int):
-            return "the input should be a string"
+        elif type(phoneNumber) == str:
+            return "The phone number should be an integer"
+        # elif phoneNumber = int:
+
+        # # elif isinstance(phoneNumber, str):
+        #     return "The phone number should be an integer"
+        elif isAdmin != 'false' and isAdmin != 'true':
+            return "IsAdmin should either be true or false"
         
 
     def get_allredflags(self):

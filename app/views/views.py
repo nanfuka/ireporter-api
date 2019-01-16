@@ -33,15 +33,12 @@ def signup():
     password = data.get('password')
     user = User()
 
-
-    error_message = redflag.validate_user_details(firstname, lastname, email, username, password)
-
-    # error_message = redflag.validate_user_details(firstname, lastname, othernames, email, phoneNumber, username, password)
-    # wrong_location = redflag.validate_location(location)
-    # if wrong_location:
-    #     return jsonify({"status": 404, 'error': wrong_location}), 404
+    invalid_detail = user.check_repitition(username, email, password)
+    error_message = redflag.validate_user_details(firstname, lastname, email, username, password, phoneNumber, isAdmin, othernames)
     if error_message:
         return jsonify({"status": 404, 'error': error_message}), 404
+    elif invalid_detail:
+        return jsonify({"status": 404, 'error': invalid_detail}), 404
     else:
         newuserinput = user.signup(
             data['firstname'],
@@ -68,14 +65,18 @@ def login():
     user = User()
     loggedin_user = user.login(username, password)
     token = create_access_token(username)
-
-    return jsonify(loggedin_user, {"access_token": token})
+    if loggedin_user:
+        return jsonify(loggedin_user, {"access_token": token})
+    else:
+        return jsonify({"status": 404, "error": "user with such credentials does not exist"}), 404
 
 
 @app.route('/api/v1/red-flags')
 @jwt_required
 def get_redflags():
-    """ A user can retrieve all redflag records  only after including the bearer token in the header """
+    """ A user can retrieve all redflag records\
+    only after including the bearer token in the header
+    """
     return redflag.get_allredflags()
 
 

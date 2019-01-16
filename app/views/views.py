@@ -64,15 +64,16 @@ def login():
     password = data.get('password')
     user = User()
     loggedin_user = user.login(username, password)
-    token = create_access_token(username)
+
     if loggedin_user:
+        token = create_access_token(username)
         return jsonify(loggedin_user, {"access_token": token})
     else:
         return jsonify({"status": 404, "error": "user with such credentials does not exist"}), 404
 
 
 @app.route('/api/v1/red-flags')
-@jwt_required
+# @jwt_required
 def get_redflags():
     """ A user can retrieve all redflag records\
     only after including the bearer token in the header

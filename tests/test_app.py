@@ -53,126 +53,137 @@ class TestUsers(unittest.TestCase):
         self.assertEqual(data['data']['phoneNumber'], 777777)
 
     def test_login(self):
-        # response = self.test_client.post('/api/v1/signup', json=self.user)
-        # data = json.loads(response.data)
-        login = {"username": "nanfuka",
-                 "password": "secrets"}
+        user = {"firstname": "debrah",
+                "lastname": "kalungi",
+                "othernames": "Nsubuga",
+                "email": "kalungid2k6@yahoo.com",
+                "PhoneNumber": 777777,
+                "username": "nanfukas",
+                "isAdmin": "true",
+                "password": "secretss"
+                }
+        response = self.test_client.post('/api/v1/signup', json=user)
+        login = {"username": "nanfukas",
+                 "password": "secretss"}
         response = self.test_client.post('/api/v1/login', json=login)
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
-        # self.assertEqual(data['message'], "Successfully signedup with ireporter")
+        self.assertEqual(data[0], {'message': 'you have logged in successfully', 'status': 201})
+        
+        logins = {"username": "nanfuks",
+                  "password": "secres"}
+        response = self.test_client.post('/api/v1/login', json=logins)
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(data, {"error": "user with such credentials does not exist", 'status': 404})
 
-    # def test_login_with_wrong_credentials(self):
-    #     login = ({"username":"mubarak", "password": "musilamu"})
-    #     response = self.test_client.post('/api/v1/login', json=login)
-    #     data = json.loads(response.data)
-    #     self.assertEqual(response.status_code, 404 )
-    #     self.assertEqual(data['error'], "user with such credentials does not exist")
+
+    def test_create_redflag(self):
+        """This method tests whether a redflag can be created if all the
+         attributes are provided"""
+        response = self.test_client.post('/api/v1/red-flags', json=self.report)
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(data['status'], 201)
+        self.assertEqual(data['message'], "Added a new incident")
+        self.assertEqual(data['data']['comment'], "this is over recurring")
+        self.assertEqual(data['data']['location'], '22.98 33.25')
+
+    def test_create_red_flag_with_invalid_createdby_value(self):
+        """This method tests whether a redflag can return an error message if
+         all the created by key and/ or value is invalid are provided"""
+        report = {"createdby": "dfeefet",
+
+                       "location": "22.98 33.25",
+                       "status": "draft",
+                       "images": "imagelocation",
+                       "videos": "videolocation",
+                       "comment": "this is over recurring",
+                       "incident_type": "redflag"
+                       }
+        response = self.test_client.post('/api/v1/red-flags', json=report)
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(data['status'], 404)
+        self.assertEqual(
+            data['error'],
+            "createdby should be an id of the creator of the redflag")
+
+    def test_create_red_flag_with_wrong_incidenttype_value(self):
+        """This method tests whether a redflag can return an error message if
+         all the location key and/ or value is invalid are provided"""
+        report = {"createdby": 2,
+
+                       "location": "22.98 33.25",
+                       "status": "draft",
+                       "images": "imagelocation",
+                       "videos": "videolocation",
+                       "comment": "this is over recurring",
+                       "incident_type": "theft"
+                       }
+        response = self.test_client.post('/api/v1/red-flags', json=report)
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(data['status'], 404)
+        self.assertEqual(data, {"error": "Incident type should either be a redflag or intervention.", "status": 404})
 
 
-    # def test_create_redflag(self):
-    #     """This method tests whether a redflag can be created if all the
-    #      attributes are provided"""
-    #     response = self.test_client.post('/api/v1/red-flags', json=self.report)
-    #     data = json.loads(response.data)
-    #     self.assertEqual(response.status_code, 201)
-    #     self.assertEqual(data['status'], 201)
-    #     self.assertEqual(data['message'], "Added a new incident")
-    #     # self.assertEqual(data['data']['comment'], "this is over recurring")
-    #     self.assertEqual(data['data']['location'], '25.22 56.22')
+    def test_get_all_redflags(self):
 
-    # def test_create_red_flag_with_invalid_createdby_value(self):
-    #     """This method tests whether a redflag can return an error message if
-    #      all the created by key and/ or value is invalid are provided"""
-    #     report = {"createdby": "debs",
 
-    #               "location": "25.22 56.22",
-    #               "status": "draft",
-    #               "images": "hjhj",
-    #               "videos": "jjh",
-    #               "comment": "hjgjhkj",
-    #               "redflags": "kjkjhghgjh",
-    #               "intervention": "jhkjhk"
-    #               }
-    #     response = self.test_client.post('/api/v1/red-flags', json=report)
-    #     data = json.loads(response.data)
-    #     self.assertEqual(response.status_code, 404)
-    #     self.assertEqual(data['status'], 404)
-    #     self.assertEqual(
-    #         data['error'],
-    #         "createdby should be an id of the creator of the redflag")
+        user = {"firstname": "debrah",
+                "lastname": "kalungi",
+                "othernames": "Nsubuga",
+                "email": "kalungidg2k6@yahoo.com",
+                "PhoneNumber": 777777,
+                "username": "nanfukass",
+                "isAdmin": "true",
+                "password": "secretsss"
+                }
 
-    # def test_create_red_flag_with_wrong_locationfield(self):
-    #     """This method tests whether a redflag can return an error message if
-    #      all the location key and/ or value is invalid are provided"""
-    #     report = {"createdby": 2,
+        response = self.test_client.post('/api/v1/signup', json=user)
+        data = json.loads(response.data)
+        token = json.loads(response.data.decode())
 
-    #               "locatin": "25.22 56.22",
-    #               "status": "draft",
-    #               "images": "hjhj",
-    #               "videos": "jjh",
-    #               "comment": "hjgjhkj",
-    #               "redflags": "kjkjhghgjh",
-    #               "intervention": "jhkjhk"
-    #               }
-    #     response = self.test_client.post('/api/v1/red-flags', json=report)
-    #     data = json.loads(response.data)
-    #     self.assertEqual(response.status_code, 404)
-    #     self.assertEqual(data['status'], 404)
-    #     self.assertEqual(
-    #         data
-    #         ['error'],
-    #         'please enter the location of this redflag')
+        # response = self.test_client.post('/api/v1/signup', json=user)
+        # login = {"username": "nanfukass",
+        #          "password": "secretsss"}
+        # response = self.test_client.post('/api/v1/login', json=login)
+        # data = json.loads(response.data)
+        # token = json.loads(response.data.decode())
 
-    # def test_create_red_flag_with_wrong_redflagfield(self):
-    #     """This method tests whether a redflag can return an error message if
-    #      all the redflad key and/ or value is invalid are provided"""
-    #     report = {"createdby": 2,
+        response2 = self.test_client.get('/api/v1/red-flags')
+        headers={'Authorisation':'Bearer'+ token['access_token']},
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 201)
 
-    #               "location": "25.22 56.22",
-    #               "status": "draft",
-    #               "images": "hjhj",
-    #               "videos": "jjh",
-    #               "comment": "hjgjhkj",
-    #               "redfla": "kjkjhghgjh",
-    #               "intervention": "jhkjhk"
-    #               }
-    #     response = self.test_client.post('/api/v1/red-flags', json=report)
-    #     data = json.loads(response.data)
-    #     self.assertEqual(response.status_code, 404)
-    #     self.assertEqual(data['status'], 404)
-    #     self.assertEqual(data['error'], "Enter a redflag.")
 
-    # def test_create_red_flag_with_wrong_interventionfield(self):
-    #     """This method tests whether a redflag can return an error message if
-    #      all the intervention key and/ or value is invalid are provided"""
-    #     report = {"createdby": 2,
+        # response = self.test_client.post('/api/v1/red-flags', json=self.report)
+        # response = self.test_client.get('/api/v1/red-flags', json=self.report)
+        # headers = {'Authorisation':'Bearer'+ token['access_token']},
+        # data = json.loads(response.data)
+        # self.assertEqual(response.status_code, 201)
+        # self.assertEqual(data["status"], 201)
+        # self.assertEqual(data['user']['email'], "kassd@yahoo.com")
 
-    #               "location": "25.22 56.22",
-    #               "status": "draft",
-    #               "images": "hjhj",
-    #               "videos": "jjh",
-    #               "comment": "hjgjhkj",
-    #               "redflags": "kjkjhghgjh",
-    #               "intervent": "jhkjhk"
-    #               }
-    #     response = self.test_client.post('/api/v1/red-flags', json=report)
-    #     data = json.loads(response.data)
-    #     self.assertEqual(response.status_code, 404)
-    #     self.assertEqual(data['status'], 404)
-    #     self.assertEqual(data['error'], "Enter intervantion.")
 
-    # def test_get_all_redflags(self):
-    #     """This method tests whether after posting valid
-    #     data, all redfalgs can be returned"""
-    #     response = self.test_client.post('/api/v1/red-flags', json=self.report)
-    #     response = self.test_client.get('/api/v1/red-flags')
-    #     data = json.loads(response.data)
-    #     self.assertEqual(response.status_code, 201)
-    #     self.assertEqual(data['status'], 201)
 
-    #     # self.assertEqual(data['data'], [{'comment': 'theft of funds'}])
-    #     # self.assertEqual(data['data']['location'], ['masaka'])
+        # response2 = self.test_client.get('/api/v1/oneuser/1')
+        # headers={'Authorisation':'Bearer'+ token['access_token']},
+        # data = json.loads(response.data)
+        # self.assertEqual(response.status_code, 201)
+        # self.assertEqual(data["status"], 201)
+        # self.assertEqual(data['user']['email'], "kassd@yahoo.com")
+        # """This method tests whether after posting valid
+        # data, all redfalgs can be returned"""
+        # response = self.test_client.post('/api/v1/red-flags', json=self.report)
+        # response = self.test_client.get('/api/v1/red-flags')
+        # data = json.loads(response.data)
+        # self.assertEqual(response.status_code, 201)
+        # self.assertEqual(data['status'], 201)
+
+        # self.assertEqual(data['data'], [{'comment': 'theft of funds'}])
+        # self.assertEqual(data['data']['location'], ["22.98 33.25"])
 
     # def test_get_one_redflag(self):
     #     """This method tests whether after posting valid

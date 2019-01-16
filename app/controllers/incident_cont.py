@@ -47,6 +47,7 @@ class Redflag():
         createdby = args[0]
         incident_type = args[1]
         status = args[2]
+
         if not createdby:
             return 'please enter the id of the creator of this redflag'
         elif not isinstance(createdby, int):
@@ -58,6 +59,7 @@ class Redflag():
         elif status != "draft":
             return 'status should either be draft,\
                 underinvestigation, resolved or rejected'
+
 
     def validate_coment(self, comment):
         if not comment or comment.isspace():
@@ -75,7 +77,7 @@ class Redflag():
         isAdmin = args[6]
         othernames = args[7]
 
-
+        email_validation = re.compile("(^[a-zA-z0-9_.]+@[a-zA-z0-9-]+\.[a-z]+$)")
 
         # if type(phoneNumber) != int:
         #     return "The phone number should be an integer"
@@ -91,6 +93,8 @@ class Redflag():
         #     return "The phone number should be an integer"
         elif isAdmin != 'false' and isAdmin != 'true':
             return "IsAdmin should either be true or false"
+        elif not email_validation.match(email):
+            return 'Invalid email, it should be in this format; kals@gma.com'
         
 
     def get_allredflags(self):

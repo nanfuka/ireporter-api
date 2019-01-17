@@ -23,7 +23,7 @@ The app is hosted om heroku at [ireporter-api] (https://reporterss.herokuapp.com
 
 ## API endpoints for the application
 Request|URL|Description
---------------------------------|------------------------------------
+|---------------|----------------------------|--------------------------
 
 **GET**|`api/v1/red-flags`|Fetch all ​red-flag ​​records
 **GET**|`api/v1/red-flags/<redflag_id>`|Fetch a specific ​red-flag​​ record

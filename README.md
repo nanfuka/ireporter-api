@@ -6,7 +6,7 @@ ireporter-api
 # i-reporter
 
 # description
-I-reporter is the localised solution to the corruption problem in Africa. With this application, every citizen can  bring any form of corruption to the notice of the appropriate authorities. These have been termed as redflags in this application. With this application, the general public can also report interventions to the concerned authorities. Interventions can include issues such as a broken bridge.
+I-reporter is the localised solution to the corruption problem in Africa. With this application, every citizen can  bring any form of corruption to the notice of the appropriate authorities. These have been termed as redflags in this application. With this application, the general public can also report interventions to the concerned authorities. Interventions can include issues such as a broken
 
 ## Project Features
 - Create a ​red-flag​​ record
@@ -23,7 +23,7 @@ The app is hosted om heroku at [ireporter-api] (https://reporterss.herokuapp.com
 
 ## API endpoints for the application
 Request|URL|Description
------------- | ------------- | -------------
+--------------------------------|------------------------------------
 
 **GET**|`api/v1/red-flags`|Fetch all ​red-flag ​​records
 **GET**|`api/v1/red-flags/<redflag_id>`|Fetch a specific ​red-flag​​ record
@@ -34,7 +34,7 @@ Request|URL|Description
 
 
 ## Instalation
-- first of all you should install python 3.7 or anyother version upwards.
+- first of all you should install python 3.7 or anyother version upwards in case you do have    it
 - Clone the GitHub repo: git clone https://github.com/nanfuka/ireporter-api.git`
 - git checkout develop
 - install a virtualenviroment with these commands (virtualenv venv)

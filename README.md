@@ -22,8 +22,8 @@ The app is hosted om heroku at [ireporter-api] (https://reporterss.herokuapp.com
 - Go to [I-reporter](https://nanfuka.github.io/iReporter/)
 
 ## API endpoints for the application
-Request|URL|Description
----|---|---
+Endpoint | Functionality| Access
+------------ | ------------- | -------------
 
 **GET**|`api/v1/red-flags`|Fetch all ​red-flag ​​records
 **GET**|`api/v1/red-flags/<redflag_id>`|Fetch a specific ​red-flag​​ record

@@ -102,7 +102,7 @@ class Redflag():
         if len(incidents) > 1:
             return jsonify({"status": 201, "data": incidents}), 201
         return jsonify({"status": 404, "message":
-                        "there are no redflag records at the moment"}), 404
+                        "there are no redflag records at the moment"}), 204
 
     def get_a_redflag(self, redflag_id):
         """Method that returns a particular \
@@ -113,10 +113,10 @@ class Redflag():
 
         if record:
 
-            return jsonify({"status": 200, "data": record[0]})
+            return jsonify({"status": 201, "data": record[0]}), 201
 
-        return jsonify({"status": 404, "error":
-                        "the record_id is not available"})
+        return jsonify({"status": 204, "error":
+                        "the record_id is not available"}), 204
 
     def edits_record_location(self, redflag_id, item, newvalue):
         """Method for modifying a particular redflag's attribute """
@@ -127,7 +127,9 @@ class Redflag():
         if record:
             record[0][item] = newvalue
 
-            return jsonify({"status": 200, "message": "Updated redflag"}), 200
+            return jsonify({"status": 201, "message": "Updated redflag"}), 201
+        else:
+            return jsonify({"status": 204, "message": "record with that id not found"}), 204
 
     def delete_record(self, redflag_id):
         """method for deleting a particular redflag at a certain redflag_id"""
@@ -138,7 +140,7 @@ class Redflag():
             incidents.remove(record[0])
             return jsonify({
                 "status":
-                200, "message": "was successfully deleted.",
-                "data": record[0]})
-        return {"status": 404, "error":
-                "the record_id is not available"}
+                201, "message": "was successfully deleted.",
+                "data": record[0]}), 201
+        return jsonify({"status": 204, "error":
+                       "the record_id is not available"}), 204

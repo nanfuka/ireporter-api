@@ -1,16 +1,18 @@
 from flask import Flask, jsonify, request, json
 # from flasgger import Swagger, swag_from
+from app.validators import Validators
 from app.controllers.incident_cont import Redflag
 from app.controllers.users_controllers import User
 from app.models.incident import Incident, incidents
-from flask_jwt_extended import create_access_token, JWTManager, jwt_required, get_jwt_identity
+from flask_jwt_extended import create_access_token, JWTManager, jwt_required,\
+    get_jwt_identity
 
-# from app.models.users import User, users
 
 app = Flask(__name__)
 jwt = JWTManager(app)
 app.config['JWT_SECRET_KEY'] = 'thisismysecret'
 redflag = Redflag()
+validators = Validators()
 
 
 @app.route('/')
@@ -34,7 +36,10 @@ def signup():
     user = User()
 
     invalid_detail = user.check_repitition(username, email, password)
-    error_message = redflag.validate_user_details(firstname, lastname, email, username, password, phoneNumber, isAdmin, othernames)
+    error_message = validators.validate_user_details(firstname, lastname,
+                                                     email, username, password,
+                                                     phoneNumber, isAdmin,
+                                                     othernames)
     if error_message:
         return jsonify({"status": 404, 'error': error_message}), 404
     elif invalid_detail:
@@ -69,7 +74,9 @@ def login():
         token = create_access_token(username)
         return jsonify(loggedin_user, {"access_token": token})
     else:
-        return jsonify({"status": 404, "error": "user with such credentials does not exist"}), 404
+        return jsonify(
+            {"status": 404,
+             "error": "user with such credentials does not exist"}), 404
 
 
 @app.route('/api/v1/red-flags')
@@ -96,14 +103,13 @@ def create_redflags():
     location = data.get('location')
     comment = data.get('comment')
     incident_type = data.get('incident_type')
-    # intervention = data.get('intervention')
     status = data.get('status')
     images = data.get('images')
     videos = data.get('videos')
     redflag = Redflag()
-    error_message = redflag.validate_input(
+    error_message = validators.validate_input(
         createdby, incident_type, status)
-    wrong_location = redflag.validate_location(location)
+    wrong_location = validators.validate_location(location)
     if wrong_location:
         return jsonify({"status": 404, 'error': wrong_location}), 404
     elif error_message:
@@ -113,7 +119,6 @@ def create_redflags():
         data['incident_type'],
         data['location'],
         data['status'],
-        # data['intervention'],
         data['images'],
         data['videos'],
         data['comment'])
@@ -131,11 +136,9 @@ def edit_location(redflag_id):
     """
     data = request.get_json()
     location = data.get('location')
-    wrong_location = redflag.validate_location(location)
+    wrong_location = validators.validate_location(location)
     if wrong_location:
         return jsonify({"status": 404, 'error': wrong_location}), 404
-    # return redflag.edits_record_location(redflag_id, 'location', location), 200
-
     return redflag.edits_record_location(redflag_id, 'location', location)
 
 
@@ -149,23 +152,18 @@ def edit_comment(redflag_id):
     data = request.get_json()
     comment = data.get('comment')
 
-    error_message = redflag.validate_coment(comment)
+    error_message = validators.validate_coment(comment)
 
     if error_message:
         return jsonify({"status": 404, 'error': error_message}), 404
-
-    # incidents["comment"] =request.json.get(item, comment)
-    # return redflag.edits_record_location(redflag_id, 'comment', comment)
     return redflag.edits_record_location(redflag_id, 'comment', comment)
 
-# @app.errorhandler(405)
-# def url_not_found(error):
-#     return jsonify
-#     ({
-#         'message': 'Requested method not allowed, try a different method'
-#     }), 405
 
-
-# @app.errorhandler(404)
-# def page_not_found(error):
-#     return jsonify({'message': 'page not found on server, check the url'}), 404
+@app.route('/api/v1/red-flags/<int:redflag_id>/redflag', methods=['DELETE'])
+# @jwt_required
+def delete_redflag(redflag_id):
+    if redflag.delete_record(redflag_id):
+        return redflag.delete_record(redflag_id)
+    return jsonify(
+        {"status": 204,
+         "message": "redflag with that redflag_id is not available"})

@@ -31,13 +31,16 @@ class User():
         return newuser
 
     def login(self, username, password):
+        """method for logging in the registered user"""
         for user in users:
             if user['username'] == username and user['password'] == password:
                 return {"status": 201,
                         "message": "you have logged in successfully"}
 
-
     def check_repitition(self, username, email, password):
+        """This method checks through the list for values to avoid a user 
+            from regestering twice
+        """
         for user in users:
             if user['username'] == username:
                 return "Username already exists, choose another one"
@@ -47,4 +50,3 @@ class User():
                 return "password already exists, choose another one"
             elif len(password) < 4:
                 return "password strength is too weak"
-            

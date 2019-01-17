@@ -34,6 +34,8 @@ class TestUsers(unittest.TestCase):
         self.login = {"username": "nanfuka",
                       "password": "secrets"}
 
+
+
     def test_index(self):
         """Method for testing the index route"""
         response = self.test_client.get('/')
@@ -43,6 +45,7 @@ class TestUsers(unittest.TestCase):
         self.assertEqual(data['status'], 201)
 
     def test_signup(self):
+        """method for testing user registration"""
         response = self.test_client.post('/api/v1/signup', json=self.user)
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 201)
@@ -54,6 +57,7 @@ class TestUsers(unittest.TestCase):
         self.assertEqual(data['data']['phoneNumber'], 777777)
 
     def test_login(self):
+        """method for testing the login"""
         user = {"firstname": "debrah",
                 "lastname": "kalungi",
                 "othernames": "Nsubuga",
@@ -70,7 +74,8 @@ class TestUsers(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
-            data[0], {'message': 'you have logged in successfully', 'status': 201})
+            data[0], {'message': 'you have logged in successfully', 
+                      'status': 201})
 
         logins = {"username": "nanfuks",
                   "password": "secres"}
@@ -78,7 +83,8 @@ class TestUsers(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 404)
         self.assertEqual(
-            data, {"error": "user with such credentials does not exist", 'status': 404})
+            data, {"error": "user with such credentials does not exist",
+                   'status': 404})
 
     def test_create_redflag(self):
         """This method tests whether a redflag can be created if all the
@@ -127,8 +133,13 @@ class TestUsers(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 404)
         self.assertEqual(data['status'], 404)
-        self.assertEqual(data, {
-                         "error": "Incident type should either be a redflag or intervention.", "status": 404})
+        self.assertEqual(
+            data, 
+            {"error": 
+             "Incident type should either be a redflag or intervention.",
+             "status": 404})
+
+
 
     def test_edit_location(self):
         """This method tests whether after posting valid
@@ -183,3 +194,6 @@ class TestUsers(unittest.TestCase):
         self.assertEqual(data['data']['redflag_id'], 1)
         self.assertEqual(data['data']['status'], "draft")
         self.assertEqual(data['data']['videos'], "videolocation")
+
+
+ 

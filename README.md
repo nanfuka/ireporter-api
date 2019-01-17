@@ -6,33 +6,31 @@ ireporter-api
 # i-reporter
 
 # description
-This is the API of Ireporter-app
-
-I-reporter is the localised solution to the corruption problem in Africa. With this app, every citizen can  bring any form of corruption to the notice of appropriate authorities and the general public. Users can also report on things that needs government intervention
+I-reporter is the localised solution to the corruption problem in Africa. With this application, every citizen can  bring any form of corruption to the notice of the appropriate authorities. These have been termed as redflags in this application. With this application, the general puclic can also bring to the notice of the concerned authorities about the intervations in regards to issues that need government intervantion.
 
 ## Project Features
 - Create a ​red-flag​​ record
 - Get all ​red-flag
-​- records○Get a specific ​red-flag​​ record
+​- Get a specific ​red-flag​​ record
 - Edit a specific ​red-flag​​ record
 - Delete a ​red-flag​​ record
 
-##heroku
-The app is hosted om heroku at [ireporter-api](https://reporterss.herokuapp.com/)
+## heroku
+The app is hosted om heroku at [ireporter-api] (https://reporterss.herokuapp.com/)
 
 ## gh-pages 
-Go to [I-reporter](https://nanfuka.github.io/iReporter/)
+- Go to [I-reporter](https://nanfuka.github.io/iReporter/)
 
 ## API endpoints for the application
 Request|URL|Description
 ---|---|---
 GET /red-flags/<red-flag-id>Fetch a specific ​red-flag​​ record
 **GET**|`api/v1/red-flags`|Fetch all ​red-flag ​​records
-**GET**|`api/v1/red-flags/<red-flag-id>`|Fetch a specific ​red-flag​​ record
-**POST**|`/red-flags`|Create a ​red-flag​​ record
-**PATCH**|`/red-flags/<red-flag-id>/location`|Edit the location of a specific red-flag record
-**PATCH**|`red-flags/<red-flag-id>/comment`|Edit the comment of a specific red-flag record
-**DELETE**|`/red-flags/<red-flag-id>`|Delete a specific red flag record
+**GET**|`api/v1/red-flags/<redflag_id>`|Fetch a specific ​red-flag​​ record
+**POST**|`api/v1/red-flags`|Create a ​red-flag​​ record
+**PATCH**|`api/v1/red-flags/<red-flag_id>/location`|Edit the location of a specific red-flag record
+**PATCH**|`api/v1/red-flags/<red-flag_id>/comment`|Edit the comment of a specific red-flag record
+**DELETE**|`api/v1/red-flags/<red-flag_id>/redflag`|Delete a specific red flag record
 
 
 ## Instalation

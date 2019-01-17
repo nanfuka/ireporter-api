@@ -34,7 +34,29 @@ class TestUsers(unittest.TestCase):
         self.login = {"username": "nanfuka",
                       "password": "secrets"}
 
+    def test_delete_redfalg(self):
+        report = [{"createdby": 3,
 
+                  "location": "22.98 33.26",
+                  "status": "draft",
+                  "images": "imagelocation",
+                  "videos": "videolocation",
+                  "comment": "this is over recurring",
+                  "incident_type": "redflag"
+                  },
+                  {"createdby": 3,
+
+                  "location": "22.98 33.26",
+                  "status": "draft",
+                  "images": "imagelocation",
+                  "videos": "videolocation",
+                  "comment": "this is over recurring",
+                  "incident_type": "redflag"
+                  }]
+        response = self.test_client.post('/api/v1/red-flags', json=report)
+        response = self.test_client.delete('/api/v1/red-flags/2/redflag')
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
 
     def test_index(self):
         """Method for testing the index route"""
@@ -45,7 +67,6 @@ class TestUsers(unittest.TestCase):
         self.assertEqual(data['status'], 201)
 
     def test_signup(self):
-        """method for testing user registration"""
         response = self.test_client.post('/api/v1/signup', json=self.user)
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 201)
@@ -74,7 +95,7 @@ class TestUsers(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
-            data[0], {'message': 'you have logged in successfully', 
+            data[0], {'message': 'you have logged in successfully',
                       'status': 201})
 
         logins = {"username": "nanfuks",
@@ -93,9 +114,8 @@ class TestUsers(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 201)
         self.assertEqual(data['status'], 201)
-        self.assertEqual(data['message'], "Added a new incident")
-        self.assertEqual(data['data']['comment'], "this is over recurring")
-        self.assertEqual(data['data']['location'], '22.98 33.25')
+        self.assertEqual(
+            data['data'], [{'id': 1, 'message': 'Added a new incident'}])
 
     def test_create_red_flag_with_invalid_createdby_value(self):
         """This method tests whether a redflag can return an error message if
@@ -111,8 +131,8 @@ class TestUsers(unittest.TestCase):
                   }
         response = self.test_client.post('/api/v1/red-flags', json=report)
         data = json.loads(response.data)
-        self.assertEqual(response.status_code, 404)
-        self.assertEqual(data['status'], 404)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(data['status'], 400)
         self.assertEqual(
             data['error'],
             "createdby should be an id of the creator of the redflag")
@@ -131,15 +151,13 @@ class TestUsers(unittest.TestCase):
                   }
         response = self.test_client.post('/api/v1/red-flags', json=report)
         data = json.loads(response.data)
-        self.assertEqual(response.status_code, 404)
-        self.assertEqual(data['status'], 404)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(data['status'], 400)
         self.assertEqual(
-            data, 
-            {"error": 
+            data,
+            {"error":
              "Incident type should either be a redflag or intervention.",
-             "status": 404})
-
-
+             "status": 400})
 
     def test_edit_location(self):
         """This method tests whether after posting valid
@@ -196,4 +214,4 @@ class TestUsers(unittest.TestCase):
         self.assertEqual(data['data']['videos'], "videolocation")
 
 
- 
+

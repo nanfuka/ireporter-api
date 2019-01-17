@@ -58,7 +58,7 @@ GET /red-flags/<red-flag-id>Fetch a specific ​red-flag​​ record
 # i-reporter
 
 # description
-I-reporter is the localised solution to the corruption problem in Africa. With this application, every citizen can  bring any form of corruption to the notice of the appropriate authorities. These have been termed as redflags in this application. With this application, the general public can also report interventions to the concerned authorities. Interventions can include issues such as a broken
+I-reporter is the localised solution to the corruption problem in Africa. With this application, every citizen can  bring any form of corruption to the notice of the appropriate authorities. These have been termed as redflags in this application. With this application, the general public can also report interventions to the concerned authorities. Interventions can include issues such as a collapsed bridge.
 
 ## Project Features
 - Create a ​red-flag​​ record

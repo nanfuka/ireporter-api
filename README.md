@@ -24,7 +24,7 @@ I-reporter is the localised solution to the corruption problem in Africa. With t
 ## API endpoints for the application
 Request|URL|Description
 ---|---|---
-GET /red-flags/<red-flag-id>Fetch a specific ​red-flag​​ record
+
 **GET**|`api/v1/red-flags`|Fetch all ​red-flag ​​records
 **GET**|`api/v1/red-flags/<red-flag-id>`|Fetch a specific ​red-flag​​ record
 **POST**|`/red-flags`|Create a ​red-flag​​ record

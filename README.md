@@ -55,7 +55,6 @@ GET /red-flags/<red-flag-id>Fetch a specific ​red-flag​​ record
 [![Coverage Status](https://coveralls.io/repos/github/nanfuka/ireporter-api/badge.svg?branch=162823442-user-able-get-all-redflags)](https://coveralls.io/github/nanfuka/ireporter-api?branch=162823442-user-able-get-all-redflags)
 [![Maintainability](https://api.codeclimate.com/v1/badges/aacc695e602d9e473552/maintainability)](https://codeclimate.com/github/nanfuka/ireporter-api/maintainability)
 
-ireporter-api
 # i-reporter
 
 # description

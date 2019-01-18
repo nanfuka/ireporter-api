@@ -21,15 +21,14 @@ class Redflag:
         newinput = incident.get_json()
         incidents.append(incident.get_json())
         return newinput
-        # return [{"id":newinput['redflag_id'], "message":"created a redflag record"}]
+
 
     def get_allredflags(self):
         """Method to return all redflags"""
         if len(incidents) > 1:
             return incidents
         return False
-        # return jsonify({"status": 200, "message":
-        #                 "there are no redflag records at the moment"}), 200
+
 
     def get_a_redflag(self, redflag_id):
         """Method that returns a particular \
@@ -55,7 +54,6 @@ class Redflag:
             record[0][item] = newvalue
 
             return [{"message": "Updated redflag", "id": redflag_id}]
-        # return [{"message": "the redflag with redflag_id is not available"}]
         else:
             return False
 

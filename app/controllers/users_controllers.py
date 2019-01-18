@@ -1,4 +1,3 @@
-# from app.models.users import User
 from app.models.ti import Ti, users
 from flask import Flask, jsonify, request, json
 import re

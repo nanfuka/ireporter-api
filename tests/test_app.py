@@ -35,24 +35,24 @@ class TestUsers(unittest.TestCase):
                       "password": "secrets"}
 
     def test_delete_redfalg(self):
-        report = [{"createdby": 3,
+        report = [
+            {"createdby": 3,
 
-                  "location": "22.98 33.26",
-                  "status": "draft",
-                  "images": "imagelocation",
-                  "videos": "videolocation",
-                  "comment": "this is over recurring",
-                  "incident_type": "redflag"
-                  },
-                  {"createdby": 3,
-
-                  "location": "22.98 33.26",
-                  "status": "draft",
-                  "images": "imagelocation",
-                  "videos": "videolocation",
-                  "comment": "this is over recurring",
-                  "incident_type": "redflag"
-                  }]
+                "location": "22.98 33.26",
+                "status": "draft",
+                "images": "imagelocation",
+                "videos": "videolocation",
+                "comment": "this is over recurring",
+                "incident_type": "redflag"
+             },
+            {"createdby": 3,
+             "location": "22.98 33.26",
+             "status": "draft",
+             "images": "imagelocation",
+             "videos": "videolocation",
+             "comment": "this is over recurring",
+             "incident_type": "redflag"
+             }]
         response = self.test_client.post('/api/v1/red-flags', json=report)
         response = self.test_client.delete('/api/v1/red-flags/2/redflag')
         data = json.loads(response.data)
@@ -63,7 +63,6 @@ class TestUsers(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(data['message'], "There are no redflag to delete")
         self.assertEqual(data['status'], 200)
-        
 
     def test_index(self):
         """Method for testing the index route"""
@@ -100,7 +99,7 @@ class TestUsers(unittest.TestCase):
         self.assertEqual(data['error'], "Invalid input, Enter a string")
 
     def test_signup_with_no_firstname(self):
-        user = {"firstname":" ",
+        user = {"firstname": " ",
                 "lastname": "kalungi",
                 "othernames": "Nsubuga",
                 "email": "kalungi2k6@yahoo.com",
@@ -231,7 +230,8 @@ class TestUsers(unittest.TestCase):
                                           json=edited_location)
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(data['message'], 'the redflag with redflag_id is not available')
+        self.assertEqual(data['message'],
+                         'the redflag with redflag_id is not available')
         self.assertEqual(data['status'], 200)
 
     def test_edit_comment(self):
@@ -243,13 +243,6 @@ class TestUsers(unittest.TestCase):
                                           json=edited_comment)
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
-
-        # response = self.test_client.patch('/api/v1/red-flags/9/comment',
-        #                                   json=edited_location)
-        # data = json.loads(response.data)
-        # self.assertEqual(response.status_code, 200)
-        # self.assertEqual(data['message'], 'the redflag with redflag_id is not available')
-        # # self.assertEqual(data['status'], 200)
 
     def test_get_one_redflag(self):
         """This method tests whether after posting valid
@@ -277,6 +270,3 @@ class TestUsers(unittest.TestCase):
         self.assertEqual(data['data']['redflag_id'], 1)
         self.assertEqual(data['data']['status'], "draft")
         self.assertEqual(data['data']['videos'], "videolocation")
-
-
-

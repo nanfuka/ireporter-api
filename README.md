@@ -7,17 +7,17 @@
 # i-reporter
 
 # description
-I-reporter is the localised solution to the corruption problem in Africa. With this application, every citizen can  bring any form of corruption to the notice of the appropriate authorities. These have been termed as redflags in this application. With this application, the general public can also report interventions to the concerned authorities. Interventions can include issues such as a collapsed bridge.
+I-reporter is the localised solution to the corruption problem in Africa. With this application, every citizen can  bring any form of corruption to the notice of the appropriate authorities. These have been termed as redflags in this application. The general public can also report interventions to the concerned authorities. Interventions can include issues such as a collapsed bridge.
 
 ## Project Features
 - Create a ​red-flag​​ record
-- Get all ​red-flag
+- Get all ​red-flag records
 ​- Get a specific ​red-flag​​ record
 - Edit a specific ​red-flag​​ record
 - Delete a ​red-flag​​ record
 
 ## heroku
-The app is hosted om heroku at [ireporter-api] (https://reportth.herokuapp.com/)
+The app is hosted on heroku at [ireporter-api](https://reportth.herokuapp.com/)
 
 ## gh-pages 
 - Go to [I-reporter](https://nanfuka.github.io/iReporter/)

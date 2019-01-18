@@ -82,8 +82,6 @@ The app is hosted om heroku at [ireporter-api] (https://reportth.herokuapp.com/)
 | POST |  `api/v1/red-flags` | Create a ​red-flag​​ record |
 | PATCH |  `api/v1/red-flags/<red-flag_id>/location` | Edit the location of a specific red-flag |
 | PATCH |  `api/v1/red-flags/<red-flag_id>/comment` | Edit the comment of a specific red-flag record|
-| DELETE  |  `/redflag/<int:redflagId>` | delete redflag record with given `redflagId` |
-| POST |  `/users` | create a new user |
 | DELETE | `api/v1/red-flags/<red-flag_id>/redflag` | Delete a specific red flag record
 | POST |  `api/v1/signup` | Add user | 
 | POST |  `api/v1/login` | login user |

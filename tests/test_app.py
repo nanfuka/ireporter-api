@@ -244,12 +244,12 @@ class TestUsers(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
 
-        response = self.test_client.patch('/api/v1/red-flags/9/comment',
-                                          json=edited_location)
-        data = json.loads(response.data)
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(data['message'], 'the redflag with redflag_id is not available')
-        # self.assertEqual(data['status'], 200)
+        # response = self.test_client.patch('/api/v1/red-flags/9/comment',
+        #                                   json=edited_location)
+        # data = json.loads(response.data)
+        # self.assertEqual(response.status_code, 200)
+        # self.assertEqual(data['message'], 'the redflag with redflag_id is not available')
+        # # self.assertEqual(data['status'], 200)
 
     def test_get_one_redflag(self):
         """This method tests whether after posting valid

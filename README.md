@@ -23,19 +23,21 @@ The app is hosted on heroku at [ireporter-api](https://reportth.herokuapp.com/)
 - Go to [I-reporter](https://nanfuka.github.io/iReporter/)
 
 ## API endpoints for the application
-Endpoint | Functionality| Access
------------- | ------------- | -------------
-GET /red-flags/<red-flag-id>Fetch a specific ​red-flag​​ record
-**GET**|`api/v1/red-flags`|Fetch all ​red-flag ​​records
-**GET**|`api/v1/red-flags/<redflag_id>`|Fetch a specific ​red-flag​​ record
-**POST**|`api/v1/red-flags`|Create a ​red-flag​​ record
-**PATCH**|`api/v1/red-flags/<red-flag_id>/location`|Edit the location of a specific red-flag record
-**PATCH**|`api/v1/red-flags/<red-flag_id>/comment`|Edit the comment of a specific red-flag record
-**DELETE**|`api/v1/red-flags/<red-flag_id>/redflag`|Delete a specific red flag record
+
+| METHOD   | URL  | FUNCTIONALITY |
+|---|---|---|
+| GET |  `api/v1/red-flags` | Fetch all ​red-flag ​​records |
+| GET | `api/v1/red-flags/<redflag_id>`| Fetch a specific ​red-flag​​ record |
+| POST |  `api/v1/red-flags` | Create a ​red-flag​​ record |
+| PATCH |  `api/v1/red-flags/<red-flag_id>/location` | Edit the location of a specific red-flag |
+| PATCH |  `api/v1/red-flags/<red-flag_id>/comment` | Edit the comment of a specific red-flag record|
+| DELETE | `api/v1/red-flags/<red-flag_id>/redflag` | Delete a specific red flag record
+| POST |  `api/v1/signup` | Add user | 
+| POST |  `api/v1/login` | login user |
 
 
 ## Instalation
-- first of all you should install python 3.7 or anyother version upwards in case you do have    it
+- install python 3.7 or anyother version upwards.
 - Clone the GitHub repo: git clone https://github.com/nanfuka/ireporter-api.git`
 - git checkout develop
 - install a virtualenviroment with these commands (virtualenv venv)

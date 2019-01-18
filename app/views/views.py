@@ -88,7 +88,8 @@ def get_redflags():
     """
     if redflag.get_allredflags():
         return jsonify({"status": 200, "data": redflag.get_allredflags()})
-    return jsonify({"status": 200, "message": "there are currently no redflag records"})
+    return jsonify({"status": 200,
+                    "message": "there are currently no redflag records"})
 
 
 @app.route('/api/v1/red-flags/<int:redflag_id>', methods=['GET'])
@@ -113,6 +114,7 @@ def create_redflags():
     error_message = validators.validate_input(
         createdby, incident_type, status)
     wrong_location = validators.validate_location(location)
+
     if wrong_location:
         return jsonify({"status": 400, 'error': wrong_location}), 400
     elif error_message:
@@ -126,7 +128,10 @@ def create_redflags():
         data['videos'],
         data['comment'])
 
-    return jsonify({"status": 201, "data": [{"id": new_incident['redflag_id'],"message": "Added a new incident"}]}), 201
+    return jsonify({"status": 201,
+                    "data": [
+                        {"id": new_incident['redflag_id'],
+                         "message": "Added a new incident"}]}), 201
 
 
 @app.route('/api/v1/red-flags/<int:redflag_id>/location', methods=['PATCH'])
@@ -141,8 +146,11 @@ def edit_location(redflag_id):
     if wrong_location:
         return jsonify({"status": 400, 'error': wrong_location}), 400
     elif redflag.edits_record_location(redflag_id, 'location', location):
-        return jsonify({"status": 201, "data": redflag.edits_record_location(redflag_id, 'location', location)})
-    return jsonify({"status": 200, "message": "the redflag with redflag_id is not available"})
+        return jsonify({"status": 201,
+                        "data": redflag.edits_record_location(
+                            redflag_id, "location", location)})
+    return jsonify({"status": 200,
+                    "message": "the redflag with redflag_id is not available"})
 
 
 @app.route('/api/v1/red-flags/<int:redflag_id>/comment', methods=['PATCH'])
@@ -160,17 +168,14 @@ def edit_comment(redflag_id):
     if error_message:
         return jsonify({"status": 400, 'error': error_message}), 400
     elif redflag.edits_record_location(redflag_id, 'comment', comment):
-        return jsonify({"status": 201, "data": redflag.edits_record_location(redflag_id, 'comment', comment)})
-    return jsonify({"status": 200, "message": "the redflag with redflag_id is not available"})
+        return jsonify({"status": 201,
+                        "data": redflag.edits_record_location(
+                            redflag_id, 'comment', comment)})
+    return jsonify({"status": 200,
+                    "message": "the redflag with redflag_id is not available"})
 
 
 @app.route('/api/v1/red-flags/<int:redflag_id>/redflag', methods=['DELETE'])
 # @jwt_required
 def delete_redflag(redflag_id):
-    # if redflag.delete_record(redflag_id):
-    #     return jsonify ({"status":200, "data":[{"id":redflag_id, "message":"redflag has been successfully deleted"}]})
-    #     # return jsonify({"status": 200, "data": redflag.delete_record(redflag_id)})
-    # return jsonify(
-    #     {"status": 204,
-    #      "message": "redflag with that redflag_id is not available"})
     return redflag.delete_record(redflag_id)

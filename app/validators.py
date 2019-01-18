@@ -35,12 +35,14 @@ class Validators:
                 underinvestigation, resolved or rejected'
 
     def validate_coment(self, comment):
+        """method which validates comment"""
         if not comment or comment.isspace():
             return 'Enter the comment'
         if isinstance(comment, int):
             return 'Comment should be a string'
 
     def validate_user_details(self, *args):
+        """method which validates user_details"""
         firstname = args[0]
         lastname = args[1]
         email = args[2]
@@ -51,7 +53,7 @@ class Validators:
         othernames = args[7]
 
         email_validation = re.compile(
-            "(^[a-zA-z0-9_.]+@[a-zA-z0-9-]+\.[a-z]+$)")
+            "(^[a-zA-Z0-9_.]+@[a-zA-Z0-9-]+\.[a-z]+$)")
 
         if not isinstance(firstname, str) or not isinstance(lastname, str)\
                 or not isinstance(username, str) or \
@@ -61,7 +63,7 @@ class Validators:
                 lastname.isspace() or not email or email.isspace() or \
                 not username or username.isspace() or not password or \
                 password.isspace()or not isAdmin or isAdmin.isspace():
-            return "Enter all items"
+            return {"message": "Enter only valid data"}
         elif type(phoneNumber) == str:
             return "The phone number should be an integer"
 

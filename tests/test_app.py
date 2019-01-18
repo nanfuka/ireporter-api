@@ -58,6 +58,13 @@ class TestUsers(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
 
+        response = self.test_client.delete('/api/v1/red-flags/7/redflag')
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['message'], "There are no redflag to delete")
+        self.assertEqual(data['status'], 200)
+        
+
     def test_index(self):
         """Method for testing the index route"""
         response = self.test_client.get('/')
@@ -76,6 +83,51 @@ class TestUsers(unittest.TestCase):
         self.assertEqual(data['data']['othernames'], "Nsubuga")
         self.assertEqual(data['data']['username'], "nanfuka")
         self.assertEqual(data['data']['phoneNumber'], 777777)
+
+    def test_signup_with_invalid_firstname_type(self):
+        user = {"firstname": 123,
+                "lastname": "kalungi",
+                "othernames": "Nsubuga",
+                "email": "kalungi2k6@yahoo.com",
+                "PhoneNumber": 777777,
+                "username": "nanfuka",
+                "isAdmin": "true",
+                "password": "secrets"
+                }
+        response = self.test_client.post('/api/v1/signup', json=user)
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(data['error'], "Invalid input, Enter a string")
+
+    def test_signup_with_no_firstname(self):
+        user = {"firstname":" ",
+                "lastname": "kalungi",
+                "othernames": "Nsubuga",
+                "email": "kalungi2k6@yahoo.com",
+                "PhoneNumber": 777777,
+                "username": "nanfuka",
+                "isAdmin": "true",
+                "password": "secrets"
+                }
+        response = self.test_client.post('/api/v1/signup', json=user)
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(data['error'], {'message': 'Enter only valid data'})
+
+    def test_signup_with_no_lastname(self):
+        user = {"firstname": "frae",
+                "lastname": " ",
+                "othernames": "Nsubuga",
+                "email": "kalungi2k6@yahoo.com",
+                "PhoneNumber": 777777,
+                "username": "nanfuka",
+                "isAdmin": "true",
+                "password": "secrets"
+                }
+        response = self.test_client.post('/api/v1/signup', json=user)
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(data['error'], {'message': 'Enter only valid data'})
 
     def test_login(self):
         """method for testing the login"""
@@ -175,6 +227,12 @@ class TestUsers(unittest.TestCase):
         response = self.test_client.patch('/api/v1/red-flags/1/location',
                                           json=edited_location)
         self.assertEqual(response.status_code, 200)
+        response = self.test_client.patch('/api/v1/red-flags/8/location',
+                                          json=edited_location)
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['message'], 'the redflag with redflag_id is not available')
+        self.assertEqual(data['status'], 200)
 
     def test_edit_comment(self):
         """This method tests whether after posting valid
@@ -185,6 +243,13 @@ class TestUsers(unittest.TestCase):
                                           json=edited_comment)
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
+
+        response = self.test_client.patch('/api/v1/red-flags/9/comment',
+                                          json=edited_location)
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['message'], 'the redflag with redflag_id is not available')
+        # self.assertEqual(data['status'], 200)
 
     def test_get_one_redflag(self):
         """This method tests whether after posting valid

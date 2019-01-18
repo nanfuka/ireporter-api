@@ -74,15 +74,17 @@ The app is hosted om heroku at [ireporter-api] (https://reportth.herokuapp.com/)
 - Go to [I-reporter](https://nanfuka.github.io/iReporter/)
 
 ## API endpoints for the application
-Endpoint | Functionality| Access
------------- | ------------- | -------------
-GET /red-flags/<red-flag-id>Fetch a specific ​red-flag​​ record
-**GET**|`api/v1/red-flags`|Fetch all ​red-flag ​​records
-**GET**|`api/v1/red-flags/<redflag_id>`|Fetch a specific ​red-flag​​ record
-**POST**|`api/v1/red-flags`|Create a ​red-flag​​ record
-**PATCH**|`api/v1/red-flags/<red-flag_id>/location`|Edit the location of a specific red-flag record
-**PATCH**|`api/v1/red-flags/<red-flag_id>/comment`|Edit the comment of a specific red-flag record
-**DELETE**|`api/v1/red-flags/<red-flag_id>/redflag`|Delete a specific red flag record
+| METHOD   | URL  | ACTION |
+|---|---|---|
+| POST |  `/redflag` | post a red-flag |
+| GET |  `/redflag` | get list of all redflags |
+| GET |  `/redflag/<int:redflagId>` | get red-flag records by `redflagId` field |
+| PATCH |  `/redflag/<int:redflagId>/location` | edit redflag location `incidentId` field |
+| PATCH |  `/redflag/<int:redflagId>/comment` | edit redflag comment `incidentId` field |
+| DELETE  |  `/redflag/<int:redflagId>` | delete redflag record with given `redflagId` |
+| POST |  `/users` | create a new user |
+| DELETE, GET |  `/users/<int:userId>` | get, delete and update user with given `userId`|
+| GET |  `/users` | get all users |
 
 
 ## Instalation

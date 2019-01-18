@@ -62,12 +62,9 @@ class Redflag:
     def delete_record(self, redflag_id):
         """method for deleting a particular redflag at a certain redflag_id"""
 
-    def delete_record(self, redflag_id):
-        """method for deleting a particular redflag at a certain redflag_id"""
-
         for redflag in incidents:
             if redflag['redflag_id'] == redflag_id:
                 print(redflag)
                 incidents.remove(redflag)
                 return jsonify({"status": 200, "data": [{"id": redflag_id, "message": "red-flag record has been deleted"}]})
-        return jsonify({"message": "no redflag to delete"}), 200
+        return jsonify({"status": 200, "message": "There are no redflag to delete"}), 200
